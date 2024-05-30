@@ -1,8 +1,10 @@
 ﻿using StarWars.Characters.Models.Movies;
 using StarWars.Characters.Models.Planets;
-using StarWars.Characters.Models.Races;
 
 namespace StarWars.Characters.Models.Characters;
+
+// The singular form of species is also species
+using Species = Species.Species;
 
 public class Character: BaseModel {
     /// <summary>
