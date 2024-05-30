@@ -2,13 +2,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Heroes.Runner", "StarWars.Heroes.Runner\StarWars.Heroes.Runner.csproj", "{69E7C985-899F-41F7-B833-21650AD4D01F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Heroes.Application", "StarWars.Heroes.Application\StarWars.Heroes.Application.csproj", "{2FDCC942-8E0A-44C0-9244-543BC7326687}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Characters.Application", "StarWars.Characters.Application\StarWars.Characters.Application.csproj", "{2FDCC942-8E0A-44C0-9244-543BC7326687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Heroes.Configuration", "StarWars.Heroes.Configuration\StarWars.Heroes.Configuration.csproj", "{DDC8BC09-4A1E-49A4-9C3A-8B83E2A6A1EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Characters.Configuration", "StarWars.Characters.Configuration\StarWars.Characters.Configuration.csproj", "{DDC8BC09-4A1E-49A4-9C3A-8B83E2A6A1EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Heroes.Models", "StarWars.Heroes.Models\StarWars.Heroes.Models.csproj", "{0558AF22-E3AA-4773-9F13-99A7A30E99CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Characters.Models", "StarWars.Characters.Models\StarWars.Characters.Models.csproj", "{0558AF22-E3AA-4773-9F13-99A7A30E99CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Heroes.Presentation.Api", "StarWars.Heroes.Presentation.Api\StarWars.Heroes.Presentation.Api.csproj", "{47405DFB-75AE-44F2-A53F-DD954322B643}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Characters.Presentation.Api", "StarWars.Characters.Presentation.Api\StarWars.Characters.Presentation.Api.csproj", "{47405DFB-75AE-44F2-A53F-DD954322B643}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
