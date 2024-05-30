@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using StarWars.Characters.Configuration.Data;
 using StarWars.Characters.Configuration.Services;
 using StarWars.Characters.Models.Characters;
+using StarWars.Characters.Models.Movies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<StarWarsCharactersDbContext>(options =>
 builder.Services.AddHostedService<PersistenceMigrator<StarWarsCharactersDbContext>>();
 
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
 builder.Services.AddMediatR(config => {
     config.RegisterServicesFromAssemblies(
