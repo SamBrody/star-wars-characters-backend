@@ -8,6 +8,8 @@
 
     <ItemGroup>
         <PackageReference Include="EntityFrameworkCore.NamingConventions" Version="8.0.0" />
+        <PackageReference Include="FastEndpoints" Version="5.25.0" />
+        <PackageReference Include="MediatR" Version="12.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
@@ -19,8 +21,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\" />
-      <Folder Include="Presentation\" />
+      <Folder Include="Configuration\Data\Migrations\" />
+      <Folder Include="Presentation\Endpoints\V1\" />
     </ItemGroup>
 
 </Project>

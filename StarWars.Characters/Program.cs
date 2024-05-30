@@ -1,5 +1,9 @@
+using System.Reflection;
+using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using StarWars.Characters.Configuration.Data;
+using StarWars.Characters.Configuration.Services;
+using StarWars.Characters.Models.Characters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +11,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<StarWarsCharactersDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddHostedService<PersistenceMigrator<StarWarsCharactersDbContext>>();
+
+builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
+
+builder.Services.AddMediatR(config => {
+    config.RegisterServicesFromAssemblies(
+        Assembly.GetExecutingAssembly()
+    );
+});
+
+builder.Services.AddFastEndpoints();
 
 var app = builder.Build();
 
@@ -21,4 +36,7 @@ if (app.Environment.IsDevelopment()) {
 
 app.UseHttpsRedirection();
 
+app.UseFastEndpoints(config => {
+    config.Versioning.PrependToRoute = true;
+});
 app.Run();
