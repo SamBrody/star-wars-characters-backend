@@ -3,5 +3,5 @@
 /// Базовый класс для моделей, содержащий Id
 /// </summary>
 public abstract class BaseModel {
-    public long Id { get; init; }
+    public int Id { get; init; }
 }
