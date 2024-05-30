@@ -11,7 +11,7 @@ using StarWars.Characters.Configuration.Data;
 namespace StarWars.Characters.Configuration.Data.Migrations
 {
     [DbContext(typeof(StarWarsCharactersDbContext))]
-    [Migration("20240530071655_InitialCreate")]
+    [Migration("20240530102448_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,11 +22,11 @@ namespace StarWars.Characters.Configuration.Data.Migrations
 
             modelBuilder.Entity("CharacterMovie", b =>
                 {
-                    b.Property<long>("CharactersId")
+                    b.Property<int>("CharactersId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("characters_id");
 
-                    b.Property<long>("MoviesId")
+                    b.Property<int>("MoviesId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("movies_id");
 
@@ -41,7 +41,7 @@ namespace StarWars.Characters.Configuration.Data.Migrations
 
             modelBuilder.Entity("StarWars.Characters.Models.Characters.Character", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
@@ -69,7 +69,7 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("height");
 
-                    b.Property<long>("HomeWorldId")
+                    b.Property<int>("HomeWorldId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("home_world_id");
 
@@ -78,7 +78,7 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("name");
 
-                    b.Property<long>("SpeciesId")
+                    b.Property<int>("SpeciesId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("species_id");
 
@@ -109,7 +109,7 @@ namespace StarWars.Characters.Configuration.Data.Migrations
 
             modelBuilder.Entity("StarWars.Characters.Models.Movies.Movie", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
@@ -123,11 +123,23 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         .HasName("pk_movies");
 
                     b.ToTable("movies", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Звездные войны: Скрытая угроза "
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Звездные войны: Атака клонов"
+                        });
                 });
 
             modelBuilder.Entity("StarWars.Characters.Models.Planets.Planet", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
@@ -141,11 +153,23 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         .HasName("pk_planets");
 
                     b.ToTable("planets", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Татуин "
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Альдераан"
+                        });
                 });
 
             modelBuilder.Entity("StarWars.Characters.Models.Species.Species", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
@@ -159,6 +183,18 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         .HasName("pk_species");
 
                     b.ToTable("species", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Человек"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Раса йоды"
+                        });
                 });
 
             modelBuilder.Entity("CharacterMovie", b =>

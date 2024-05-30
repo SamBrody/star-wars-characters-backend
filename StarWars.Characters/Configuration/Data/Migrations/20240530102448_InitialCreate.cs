@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace StarWars.Characters.Configuration.Data.Migrations
 {
     /// <inheritdoc />
@@ -14,7 +16,7 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                 name: "movies",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "INTEGER", nullable: false)
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     name = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -27,7 +29,7 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                 name: "planets",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "INTEGER", nullable: false)
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     name = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -40,7 +42,7 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                 name: "species",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "INTEGER", nullable: false)
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     name = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -53,12 +55,12 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                 name: "characters",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "INTEGER", nullable: false)
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     name = table.Column<string>(type: "TEXT", nullable: false),
-                    home_world_id = table.Column<long>(type: "INTEGER", nullable: false),
+                    home_world_id = table.Column<int>(type: "INTEGER", nullable: false),
                     gender = table.Column<int>(type: "INTEGER", nullable: false),
-                    species_id = table.Column<long>(type: "INTEGER", nullable: false),
+                    species_id = table.Column<int>(type: "INTEGER", nullable: false),
                     height = table.Column<int>(type: "INTEGER", nullable: false),
                     hair_color = table.Column<string>(type: "TEXT", nullable: false),
                     eye_color = table.Column<string>(type: "TEXT", nullable: false),
@@ -87,8 +89,8 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                 name: "characters_movies",
                 columns: table => new
                 {
-                    characters_id = table.Column<long>(type: "INTEGER", nullable: false),
-                    movies_id = table.Column<long>(type: "INTEGER", nullable: false)
+                    characters_id = table.Column<int>(type: "INTEGER", nullable: false),
+                    movies_id = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -105,6 +107,33 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         principalTable: "movies",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "movies",
+                columns: new[] { "id", "name" },
+                values: new object[,]
+                {
+                    { 1, "Звездные войны: Скрытая угроза " },
+                    { 2, "Звездные войны: Атака клонов" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "planets",
+                columns: new[] { "id", "name" },
+                values: new object[,]
+                {
+                    { 1, "Татуин " },
+                    { 2, "Альдераан" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "species",
+                columns: new[] { "id", "name" },
+                values: new object[,]
+                {
+                    { 1, "Человек" },
+                    { 2, "Раса йоды" }
                 });
 
             migrationBuilder.CreateIndex(
