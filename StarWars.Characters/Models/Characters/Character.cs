@@ -18,7 +18,7 @@ public class Character: BaseModel {
     /// <summary>
     /// Планета происхождения
     /// </summary>
-    public Planet Planet { get; init; }
+    public Planet HomeWorld { get; init; }
     
     /// <summary>
     /// Пол персонажа
@@ -28,7 +28,7 @@ public class Character: BaseModel {
     /// <summary>
     /// Раса персонажа
     /// </summary>
-    public Race Race { get; init; }
+    public Species Species { get; init; }
     
     /// <summary>
     /// Рост персонажа
@@ -43,7 +43,7 @@ public class Character: BaseModel {
     /// <summary>
     /// Цвет глаз персонажа
     /// </summary>
-    public string EyesColor { get; init; }
+    public string EyeColor { get; init; }
     
     /// <summary>
     /// Описание персонажа

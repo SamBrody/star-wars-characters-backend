@@ -1,5 +1,5 @@
 ﻿namespace StarWars.Characters.Models.Races;
 
-public class Race : BaseModel {
+public class Species : BaseModel {
     public string Name { get; init; }
 }

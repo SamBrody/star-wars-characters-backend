@@ -2,7 +2,7 @@
 
 namespace StarWars.Characters.Models.Movies;
 
-public class Movie {
+public class Movie : BaseModel {
     public string Name { get; init; }
     
     /// <summary>
