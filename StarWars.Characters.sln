@@ -1,14 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Characters.Application", "StarWars.Characters.Application\StarWars.Characters.Application.csproj", "{2FDCC942-8E0A-44C0-9244-543BC7326687}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Characters.Configuration", "StarWars.Characters.Configuration\StarWars.Characters.Configuration.csproj", "{DDC8BC09-4A1E-49A4-9C3A-8B83E2A6A1EB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Characters.Models", "StarWars.Characters.Models\StarWars.Characters.Models.csproj", "{0558AF22-E3AA-4773-9F13-99A7A30E99CA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Characters.Presentation.Api", "StarWars.Characters.Presentation.Api\StarWars.Characters.Presentation.Api.csproj", "{47405DFB-75AE-44F2-A53F-DD954322B643}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Characters.Runner", "StarWars.Characters.Runner\StarWars.Characters.Runner.csproj", "{E264BEF0-03FE-4DC6-A7BD-FDAF706AF4C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Characters", "StarWars.Characters\StarWars.Characters.csproj", "{E264BEF0-03FE-4DC6-A7BD-FDAF706AF4C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,22 +8,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2FDCC942-8E0A-44C0-9244-543BC7326687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FDCC942-8E0A-44C0-9244-543BC7326687}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FDCC942-8E0A-44C0-9244-543BC7326687}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FDCC942-8E0A-44C0-9244-543BC7326687}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDC8BC09-4A1E-49A4-9C3A-8B83E2A6A1EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDC8BC09-4A1E-49A4-9C3A-8B83E2A6A1EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDC8BC09-4A1E-49A4-9C3A-8B83E2A6A1EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDC8BC09-4A1E-49A4-9C3A-8B83E2A6A1EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0558AF22-E3AA-4773-9F13-99A7A30E99CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0558AF22-E3AA-4773-9F13-99A7A30E99CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0558AF22-E3AA-4773-9F13-99A7A30E99CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0558AF22-E3AA-4773-9F13-99A7A30E99CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47405DFB-75AE-44F2-A53F-DD954322B643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47405DFB-75AE-44F2-A53F-DD954322B643}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47405DFB-75AE-44F2-A53F-DD954322B643}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47405DFB-75AE-44F2-A53F-DD954322B643}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E264BEF0-03FE-4DC6-A7BD-FDAF706AF4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E264BEF0-03FE-4DC6-A7BD-FDAF706AF4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E264BEF0-03FE-4DC6-A7BD-FDAF706AF4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
