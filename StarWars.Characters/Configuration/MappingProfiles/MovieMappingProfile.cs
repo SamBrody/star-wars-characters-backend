@@ -7,7 +7,6 @@ namespace StarWars.Characters.Configuration.MappingProfiles;
 
 public class MovieMappingProfile : Profile {
     public MovieMappingProfile() {
-        CreateMap<Movie, MovieGetManyResponse>();
         CreateMap<Movie, MovieDto>();
     }
 }
