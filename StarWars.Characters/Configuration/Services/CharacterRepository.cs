@@ -6,14 +6,28 @@ namespace StarWars.Characters.Configuration.Services;
 
 public sealed class CharacterRepository(StarWarsCharactersDbContext context) : ICharacterRepository {
     public async Task<ICollection<Character>> GetManyAsync(CancellationToken c) {
-        var characters = await context.Characters.ToListAsync(c);
+        var characters = await context.Characters
+            .Include(x => x.Species)
+            .Include(x => x.HomeWorld)
+            .Include(x => x.Movies)
+            .ToListAsync(c);
 
         return characters;
     }
 
-    public async Task<Character> InsertAsync(Character character, CancellationToken c) {
+    public async Task<Character?> GetByIdOrDefaultAsync(int id, CancellationToken c) {
+        var character = await context.Characters
+            .Include(x => x.Species)
+            .Include(x => x.HomeWorld)
+            .Include(x => x.Movies)
+            .FirstOrDefaultAsync(x => x.Id == id, c);
+
+        return character;
+    }
+    
+    public async Task<int> InsertAsync(Character character, CancellationToken c) {
         var result = await context.Characters.AddAsync(character, c);
 
-        return result.Entity;
+        return result.Entity.Id;
     }
 }

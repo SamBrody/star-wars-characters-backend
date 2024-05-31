@@ -18,16 +18,21 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
         });
     }
     
-    public override async Task HandleAsync(CharacterCreateRequest r, CancellationToken c) {
+    public override Task HandleAsync(CharacterCreateRequest r, CancellationToken c) {
         var cmd = mapper.Map<RegisterCharacterCommand>(r);
         
-        await sender.Send(cmd, c);
+        return sender.Send(cmd, c).Result.Match(
+            x => SendOkAsync(c),
+            e => {
+                AddError(e.ToString());
+
+                return SendErrorsAsync(cancellation: c);
+            }
+        );
     }
 }
 
 public class CharacterCreateRequest {
-    public required int Id { get; init; }
-    
     public required string Name { get; init; }
     
     public required CharacterBirthDay BirthDay { get; init; }
