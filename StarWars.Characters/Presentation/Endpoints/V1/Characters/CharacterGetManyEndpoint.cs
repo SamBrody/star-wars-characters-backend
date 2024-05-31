@@ -1,10 +1,11 @@
 ﻿using FastEndpoints;
 using StarWars.Characters.Models.Characters;
+using StarWars.Characters.Presentation.Dtos;
 using IMapper = AutoMapper.IMapper;
 
 namespace StarWars.Characters.Presentation.Endpoints.V1.Characters;
 
-using Response = ICollection<CharacterGetManyResponse>;
+using Response = ICollection<CharacterDto>;
 
 public class CharacterGetManyEndpoint(
     ICharacterRepository characterRepository,
@@ -17,7 +18,7 @@ public class CharacterGetManyEndpoint(
         Version(1);
         
         Summary(x => {
-            x.Summary = "Get Characters Many";
+            x.Summary = "Получить всех персонажей";
         });
     }
 
@@ -27,46 +28,4 @@ public class CharacterGetManyEndpoint(
         
         await SendOkAsync(response, cancellation: c);
     }
-}
-
-public class CharacterGetManyResponse {
-    public int Id { get; init; }
-    
-    public string Name { get; init; }
-    
-    public CharacterBirthDay BirthDay { get; init; }
-    
-    public PlanetDto HomeWorld { get; init; }
-    
-    public CharacterGender Gender { get; init; }
-    
-    public SpeciesDto Species { get; init; }
-    
-    public int Height { get; init; }
-    
-    public string HairColor { get; init; }
-    
-    public string EyeColor { get; init; }
-    
-    public string Description { get; init; }
-    
-    public ICollection<MovieDto> Movies { get; init; }
-}
-
-public class PlanetDto {
-    public int Id { get; init; }
-    
-    public string Name { get; init; }
-}
-
-public class SpeciesDto {
-    public int Id { get; init; }
-    
-    public string Name { get; init; }
-}
-
-public class MovieDto {
-    public int Id { get; init; }
-    
-    public string Name { get; init; }
 }

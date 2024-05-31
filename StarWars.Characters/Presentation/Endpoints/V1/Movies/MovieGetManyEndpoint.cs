@@ -14,7 +14,7 @@ public class MovieGetManyEndpoint(IMovieRepository movieRepository, IMapper mapp
         Version(1);
         
         Summary(x => {
-            x.Summary = "Get Many Movies";
+            x.Summary = "Получить все фильмы";
         });
     }
     

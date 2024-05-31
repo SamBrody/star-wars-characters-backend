@@ -14,19 +14,19 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
         Version(1);
 
         Summary(x => {
-            x.Summary = "Create Character";
+            x.Summary = "Регистрация нового персонажа";
         });
     }
     
-    public override Task HandleAsync(CharacterCreateRequest r, CancellationToken c) {
+    public override async Task HandleAsync(CharacterCreateRequest r, CancellationToken c) {
         var cmd = mapper.Map<RegisterCharacterCommand>(r);
         
-        return sender.Send(cmd, c).Result.Match(
-            x => SendOkAsync(c),
-            e => {
+        await sender.Send(cmd, c).Result.Match(
+            async _ => await SendOkAsync(c),
+            async e => {
                 AddError(e.ToString());
 
-                return SendErrorsAsync(cancellation: c);
+                await SendErrorsAsync(cancellation: c);
             }
         );
     }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using StarWars.Characters.Models.Species;
-using StarWars.Characters.Presentation.Endpoints.V1.Characters;
+using StarWars.Characters.Presentation.Dtos;
 
 namespace StarWars.Characters.Configuration.MappingProfiles;
 

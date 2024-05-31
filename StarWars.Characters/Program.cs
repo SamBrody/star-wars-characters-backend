@@ -1,6 +1,6 @@
 using System.Reflection;
-using AutoMapper;
 using FastEndpoints;
+using FastEndpoints.Swagger;
 using Microsoft.EntityFrameworkCore;
 using StarWars.Characters.Configuration.Data;
 using StarWars.Characters.Configuration.MappingProfiles;
@@ -15,9 +15,21 @@ using IMapper = AutoMapper.IMapper;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services
+    .AddFastEndpoints()
+    .SwaggerDocument(o => {
+        o.DocumentSettings = s => {
+            s.Title = "StarWars.Characters API";
+            s.Version = "v1";
+        };
+        o.MaxEndpointVersion = 1;
+
+        o.ShortSchemaNames = true;
+    });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<StarWarsCharactersDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -33,8 +45,6 @@ builder.Services.AddMediatR(cfg => {
     cfg.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
 });
 
-builder.Services.AddFastEndpoints();
-
 // Configure Automapper
 builder.Services.AddAutoMapper(
     typeof(CharacterMappingProfile),
@@ -45,18 +55,14 @@ builder.Services.AddAutoMapper(
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
     var mapper = app.Services.GetService<IMapper>();
     mapper.ConfigurationProvider.AssertConfigurationIsValid();
 }
 
+app.UseFastEndpoints(cfg => cfg.Versioning.PrependToRoute = true);
+app.UseSwaggerGen();
+
 app.UseHttpsRedirection();
 
-app.UseFastEndpoints(config => {
-    config.Versioning.PrependToRoute = true;
-});
 app.Run();
