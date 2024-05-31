@@ -2,13 +2,11 @@
 using MediatR;
 using StarWars.Characters.Application.Characters;
 using StarWars.Characters.Models.Characters;
-using StarWars.Characters.Models.Movies;
-using StarWars.Characters.Models.Planets;
-using StarWars.Characters.Models.Species;
+using IMapper = AutoMapper.IMapper;
 
 namespace StarWars.Characters.Presentation.Endpoints.V1.Characters;
 
-public class CharacterCreateEndpoint(ISender sender) : Endpoint<CharacterCreateRequest> {
+public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<CharacterCreateRequest> {
     public override void Configure() {
         AllowAnonymous();
 
@@ -20,25 +18,16 @@ public class CharacterCreateEndpoint(ISender sender) : Endpoint<CharacterCreateR
         });
     }
     
-    public override Task HandleAsync(CharacterCreateRequest r, CancellationToken c) {
-        var cmd = new RegisterCharacterCommand(
-            r.Name,
-            r.BirthDay,
-            r.PlanetId,
-            r.Gender,
-            r.SpeciesId,
-            r.Height,
-            r.HairColor,
-            r.EyeColor,
-            r.Description,
-            r.Movies
-        );
+    public override async Task HandleAsync(CharacterCreateRequest r, CancellationToken c) {
+        var cmd = mapper.Map<RegisterCharacterCommand>(r);
         
-        return sender.Send(cmd, c);
+        await sender.Send(cmd, c);
     }
 }
 
 public class CharacterCreateRequest {
+    public required int Id { get; init; }
+    
     public required string Name { get; init; }
     
     public required CharacterBirthDay BirthDay { get; init; }
@@ -57,5 +46,5 @@ public class CharacterCreateRequest {
     
     public required string Description { get; init; }
     
-    public required ICollection<int> Movies { get; init; }
+    public required ICollection<int> MovieIds { get; init; }
 }
