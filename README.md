@@ -8,27 +8,40 @@
 
 ## Запуск
 
-### Локально
+Для запуска локально необходимо выполнить следующие шаги:
 
-Установить dotnet tool
+### Создание БД
+
+1. Если нет dotnet tool dotnet-ef, то его необходимо установить
 
 ```shell
 dotnet tool install --global dotnet-ef
 ```
 
-Из папки проекта
-```
+2. Перейти в папку с проектом
+
+```shell
 cd .\StarWars.Characters
 ```
 
-Выполнить следующие команды:
-
-Миграция, инициализирующая БД:
+3. Инициализирующая миграция БД. В проекте уже есть миграции, можно сразу приступить к шагу 3:
 ```shell
 dotnet ef migrations add InitialCreate --output-dir "Configuration/Data/Migrations"
 ```
 
-Обновление БД:
+4. Обновление БД, если БД нет, то команда её создаст:
 ```shell
 dotnet-ef database update
+```
+
+### Сборка образа
+
+Из корневой папки выполнить сборка образа сервисного приложения:
+
+```shell
+docker build -f "StarWars.Characters/Dockerfile" -t starwars.characters.api:v1-dev .
+```
+
+```shell
+docker run --name sw_characters -d --publish 3105:8080 starwars.characters.api:v1-dev
 ```
