@@ -3,7 +3,7 @@
 namespace StarWars.Characters.Models.Species;
 
 public class Species : BaseModel {
-    public string Name { get; init; }
+    public string Name { get; set; }
     
-    public ICollection<Character> Characters { get; init; }
+    public ICollection<Character> Characters { get; set; }
 }

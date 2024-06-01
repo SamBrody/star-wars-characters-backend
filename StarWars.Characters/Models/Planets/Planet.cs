@@ -3,7 +3,7 @@
 namespace StarWars.Characters.Models.Planets;
 
 public class Planet : BaseModel {
-    public string Name { get; init; }
+    public string Name { get; set; }
     
-    public ICollection<Character> Characters { get; init; }
+    public ICollection<Character> Characters { get; set; }
 }

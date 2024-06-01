@@ -45,21 +45,18 @@ public class UpdateCharacterCommandHandler(
         var movies = await movieRepository.GetRangeByIdsOrDefaultAsync(cmd.MovieIds, c);
         if (movies == null) return UpdateCharacterErrors.MoviesNotFound;
 
-        var updatedCharacter = new Character {
-            Id          = cmd.Id,
-            Name        = cmd.Name,
-            BirthDay    = cmd.BirthDay,
-            HomeWorld   = planet,
-            Gender      = cmd.Gender,
-            Species     = species,
-            Height      = cmd.Height,
-            HairColor   = cmd.HairColor,
-            EyeColor    = cmd.EyeColor,
-            Description = cmd.Description,
-            Movies      = movies
-        };
-
-        return characterRepository.Upsert(updatedCharacter);
+        character.Name        = cmd.Name;
+        character.BirthDay    = cmd.BirthDay;
+        character.HomeWorld   = planet;
+        character.Gender      = cmd.Gender;
+        character.Species     = species;
+        character.Height      = cmd.Height;
+        character.HairColor   = cmd.HairColor;
+        character.EyeColor    = cmd.EyeColor;
+        character.Description = cmd.Description;
+        character.Movies      = movies;
+        
+        return characterRepository.Upsert(character);
     }
 }
 
