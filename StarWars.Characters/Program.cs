@@ -47,10 +47,10 @@ builder.Services.AddMediatR(cfg => {
 
 // Configure Automapper
 builder.Services.AddAutoMapper(
-    typeof(CharacterMappingProfile),
-    typeof(MovieMappingProfile),
-    typeof(SpeciesMappingProfile),
-    typeof(PlanetMappingProfile)
+    typeof(CharacterMappingProfile).Assembly,
+    typeof(MovieMappingProfile).Assembly,
+    typeof(SpeciesMappingProfile).Assembly,
+    typeof(PlanetMappingProfile).Assembly
 );
 
 var app = builder.Build();
