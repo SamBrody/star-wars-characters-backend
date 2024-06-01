@@ -30,4 +30,10 @@ public sealed class CharacterRepository(StarWarsCharactersDbContext context) : I
 
         return result.Entity.Id;
     }
+
+    public async Task RemoveAsync(Character character, CancellationToken c) {
+        context.Characters.Remove(character);
+
+        await context.SaveChangesAsync(c);
+    }
 }
