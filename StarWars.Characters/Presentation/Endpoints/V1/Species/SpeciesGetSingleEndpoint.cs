@@ -32,15 +32,15 @@ public class SpeciesGetSingleEndpoint(
         });
     }
 
-    public override async Task HandleAsync(SpeciesRequest r, CancellationToken c) {
-        var getCharacterResult = await GetCharacterByIdOrDefault(r, c);
+    public override Task HandleAsync(SpeciesRequest r, CancellationToken c) {
+        var getCharacterResult = GetCharacterByIdOrDefault(r, c);
 
-        await getCharacterResult.Match(
-            async dto => await SendOkAsync(dto, c),
-            async e => {
+        return getCharacterResult.Result.Match(
+            dto => SendOkAsync(dto, c),
+            e => {
                 AddError(e.ToString());
                 
-                await SendErrorsAsync(cancellation: c);
+                return SendErrorsAsync(cancellation: c);
             }
         );
     }

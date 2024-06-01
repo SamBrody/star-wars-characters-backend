@@ -32,20 +32,20 @@ public class MovieGetSingleEndpoint(
         });
     }
 
-    public override async Task HandleAsync(MovieRequest r, CancellationToken c) {
-        var getCharacterResult = await GetCharacterByIdOrDefault(r, c);
+    public override Task HandleAsync(MovieRequest r, CancellationToken c) {
+        var getCharacterResult = GetCharacterByIdOrDefaultAsync(r, c);
 
-        await getCharacterResult.Match(
-            async dto => await SendOkAsync(dto, c),
-            async e => {
+        return getCharacterResult.Result.Match(
+            dto => SendOkAsync(dto, c),
+            e => {
                 AddError(e.ToString());
                 
-                await SendErrorsAsync(cancellation: c);
+                return SendErrorsAsync(cancellation: c);
             }
         );
     }
 
-    private async Task<Result> GetCharacterByIdOrDefault(MovieRequest r, CancellationToken c) {
+    private async Task<Result> GetCharacterByIdOrDefaultAsync(MovieRequest r, CancellationToken c) {
         var movie = await movieRepository.GetByIdOrDefaultAsync(r.Id, c);
 
         if (movie == null) return GetMovieError.MovieNotFound;

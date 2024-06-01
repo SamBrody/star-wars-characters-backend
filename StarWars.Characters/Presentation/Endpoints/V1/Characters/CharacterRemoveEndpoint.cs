@@ -15,13 +15,13 @@ public class CharacterRemoveEndpoint(ISender sender): Endpoint<CharacterRemoveEn
         Delete("/characters/{id}");
     }
 
-    public override async Task HandleAsync(Request r, CancellationToken c) {
-        await sender.Send(new RemoveCharacterCommand(r.Id), c).Result.Match(
-            async _ => await SendOkAsync(c),
-            async e => {
+    public override Task HandleAsync(Request r, CancellationToken c) {
+        return sender.Send(new RemoveCharacterCommand(r.Id), c).Result.Match(
+            _ => SendOkAsync(c),
+            e => {
                 AddError(e.ToString());
 
-                await SendErrorsAsync(cancellation: c);
+                return SendErrorsAsync(cancellation: c);
             }
         );
     }

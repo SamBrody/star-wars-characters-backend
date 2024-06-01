@@ -17,15 +17,15 @@ public class MovieCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<Crea
         });
     }
     
-    public override async Task HandleAsync(CreateMovieRequest r, CancellationToken c) {
+    public override Task HandleAsync(CreateMovieRequest r, CancellationToken c) {
         var cmd = mapper.Map<RegisterMovieCommand>(r);
         
-        await sender.Send(cmd, c).Result.Match(
-            async _ => await SendOkAsync(c),
-            async e => {
+        return sender.Send(cmd, c).Result.Match(
+            _ => SendOkAsync(c),
+            e => {
                 AddError(e.ToString());
 
-                await SendErrorsAsync(cancellation: c);
+                return SendErrorsAsync(cancellation: c);
             }
         );
     }
