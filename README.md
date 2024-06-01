@@ -16,7 +16,7 @@ dotnet tool install --global dotnet-ef
 
 Из папки проекта
 ```
-dotnet-ef database update
+cd .\StarWars.Characters
 ```
 
 Выполнить следующие команды:
