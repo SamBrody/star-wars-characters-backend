@@ -1,4 +1,5 @@
 ﻿using FastEndpoints;
+using FluentValidation;
 using OneOf;
 using StarWars.Characters.Models.Movies;
 using StarWars.Characters.Models.Planets;
@@ -12,11 +13,23 @@ using Result = OneOf<PlanetDto, PlanetGetSingleEndpoint.GetPlanetError>;
 public class PlanetGetSingleEndpoint(
     IPlanetRepository planetRepository,
     IMapper mapper
-) : Endpoint<PlanetGetSingleEndpoint.PlanetRequest, PlanetDto> {
-    public class PlanetRequest {
+) : Endpoint<PlanetGetSingleEndpoint.Request, PlanetDto> {
+    #region Request
+
+    public class Request {
         [BindFrom("id")]
         public int Id { get; init; }
     }
+
+    private class ReqValidator : Validator<Request> {
+        public ReqValidator() {
+            RuleFor(x => x.Id)
+                .GreaterThan(0)
+                .WithMessage("Неверный идентификатор");
+        }
+    }
+
+    #endregion
     
     public enum GetPlanetError {
         PlanetNotFound
@@ -27,13 +40,14 @@ public class PlanetGetSingleEndpoint(
         
         Get("/planets/{id}");
         Version(1);
+        Validator<ReqValidator>();
         
         Summary(x => {
             x.Summary = "Получить информацию о планете по её индентификатору";
         });
     }
 
-    public override Task HandleAsync(PlanetRequest r, CancellationToken c) {
+    public override Task HandleAsync(Request r, CancellationToken c) {
         var getCharacterResult = GetCharacterByIdOrDefault(r, c);
 
         return getCharacterResult.Result.Match(
@@ -46,7 +60,7 @@ public class PlanetGetSingleEndpoint(
         );
     }
 
-    private async Task<Result> GetCharacterByIdOrDefault(PlanetRequest r, CancellationToken c) {
+    private async Task<Result> GetCharacterByIdOrDefault(Request r, CancellationToken c) {
         var movie = await planetRepository.GetByIdOrDefaultAsync(r.Id, c);
 
         if (movie == null) return GetPlanetError.PlanetNotFound;

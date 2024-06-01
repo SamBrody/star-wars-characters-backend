@@ -1,16 +1,30 @@
 ﻿using FastEndpoints;
+using FluentValidation;
 using MediatR;
 using StarWars.Characters.Application.Species;
 using IMapper = AutoMapper.IMapper;
 
 namespace StarWars.Characters.Presentation.Endpoints.V1.Species;
 
-public class SpeciesCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<CreateSpeciesRequest> {
+public class SpeciesCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<SpeciesCreateEndpoint.CreateSpeciesRequest> {
+    #region Request
+
+    public class CreateSpeciesRequest {
+        public required string Name { get; init; }
+    }
+    
+    private class ReqValidator : Validator<CreateSpeciesRequest> {
+        public ReqValidator() => RuleFor(x => x.Name).NotEmpty();
+    }
+
+    #endregion
+    
     public override void Configure() {
         AllowAnonymous();
 
         Post("/species");
         Version(1);
+        Validator<ReqValidator>();
 
         Summary(x => {
             x.Summary = "Регистрация новой расы";
@@ -29,8 +43,4 @@ public class SpeciesCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<Cr
             }
         );
     }
-}
-
-public class CreateSpeciesRequest {
-    public required string Name { get; init; }
 }

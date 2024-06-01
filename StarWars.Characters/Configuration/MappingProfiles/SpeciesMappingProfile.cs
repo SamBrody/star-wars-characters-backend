@@ -9,6 +9,6 @@ namespace StarWars.Characters.Configuration.MappingProfiles;
 public class SpeciesMappingProfile : Profile {
     public SpeciesMappingProfile() {
         CreateMap<Species, SpeciesDto>();
-        CreateMap<CreateSpeciesRequest, RegisterSpeciesCommand>();
+        CreateMap<SpeciesCreateEndpoint.CreateSpeciesRequest, RegisterSpeciesCommand>();
     }
 }

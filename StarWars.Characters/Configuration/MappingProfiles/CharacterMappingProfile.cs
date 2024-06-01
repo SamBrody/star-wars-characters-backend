@@ -8,8 +8,8 @@ namespace StarWars.Characters.Configuration.MappingProfiles;
 
 public class CharacterMappingProfile : Profile {
     public CharacterMappingProfile() {
-        CreateMap<CreateCharacterRequest, RegisterCharacterCommand>();
-        CreateMap<UpdateCharacterRequest, UpdateCharacterCommand>();
+        CreateMap<CharacterCreateEndpoint.CreateCharacterRequest, RegisterCharacterCommand>();
+        CreateMap<CharacterUpdateEndpoint.UpdateCharacterRequest, UpdateCharacterCommand>();
         CreateMap<Character, CharacterDto>()
             .ForMember(dest => dest.HomeWorld, opt => opt.MapFrom(src => src.HomeWorld))
             .ForMember(dest => dest.Species, opt => opt.MapFrom(src => src.Species))

@@ -1,4 +1,5 @@
 ﻿using FastEndpoints;
+using FluentValidation;
 using MediatR;
 using StarWars.Characters.Application.Characters;
 using StarWars.Characters.Models.Characters;
@@ -6,13 +7,66 @@ using IMapper = AutoMapper.IMapper;
 
 namespace StarWars.Characters.Presentation.Endpoints.V1.Characters;
 
-using Request = UpdateCharacterRequest;
+using Request = CharacterUpdateEndpoint.UpdateCharacterRequest;
 
 public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<Request> {
+    #region Request
+
+    public class UpdateCharacterRequest {
+        [BindFrom("id")]
+        public int Id { get; init; }
+    
+        public string Name { get; init; }
+    
+        public CharacterBirthDay BirthDay { get; init; }
+    
+        public int PlanetId { get; init; }
+    
+        public CharacterGender Gender { get; init; }
+    
+        public int SpeciesId { get; init; }
+    
+        public int Height { get; init; }
+    
+        public string HairColor { get; init; }
+    
+        public string EyeColor { get; init; }
+    
+        public string Description { get; init; }
+    
+        public ICollection<int> MovieIds { get; init; }
+    }
+    
+    private class ReqValidator : Validator<UpdateCharacterRequest> {
+        public ReqValidator() {
+            RuleFor(x => x.Id)
+                .GreaterThan(0)
+                .GreaterThan(0)
+                .WithMessage("Неверный идентификатор");
+            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.BirthDay).NotEmpty();
+            RuleFor(x => x.PlanetId).NotEmpty();
+            RuleFor(x => x.Gender).NotEmpty();
+            RuleFor(x => x.SpeciesId).NotEmpty();
+            RuleFor(x => x.Height)
+                .GreaterThan(0)
+                .WithMessage("Рост должен быть больше 0")
+                .NotEmpty();
+            RuleFor(x => x.HairColor).NotEmpty();
+            RuleFor(x => x.EyeColor).NotEmpty();
+            RuleFor(x => x.Description).NotEmpty();
+            RuleFor(x => x.MovieIds).NotEmpty();
+        }
+    }
+
+    #endregion
+    
     public override void Configure() {
         AllowAnonymous();
         
         Put("characters/{id}");
+        Version(1);
+        Validator<ReqValidator>();
 
         Summary(s => {
             s.Summary = "Обновление параметров Персонажа";
@@ -31,29 +85,4 @@ public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<
             }
         );
     }
-}
-
-public class UpdateCharacterRequest {
-    [BindFrom("id")]
-    public int Id { get; init; }
-    
-    public string Name { get; init; }
-    
-    public CharacterBirthDay BirthDay { get; init; }
-    
-    public int PlanetId { get; init; }
-    
-    public CharacterGender Gender { get; init; }
-    
-    public int SpeciesId { get; init; }
-    
-    public int Height { get; init; }
-    
-    public string HairColor { get; init; }
-    
-    public string EyeColor { get; init; }
-    
-    public string Description { get; init; }
-    
-    public ICollection<int> MovieIds { get; init; }
 }

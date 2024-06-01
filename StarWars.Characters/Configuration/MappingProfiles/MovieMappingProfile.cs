@@ -9,6 +9,6 @@ namespace StarWars.Characters.Configuration.MappingProfiles;
 public class MovieMappingProfile : Profile {
     public MovieMappingProfile() {
         CreateMap<Movie, MovieDto>();
-        CreateMap<CreateMovieRequest, RegisterMovieCommand>();
+        CreateMap<MovieCreateEndpoint.CreateMovieRequest, RegisterMovieCommand>();
     }
 }

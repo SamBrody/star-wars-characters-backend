@@ -1,18 +1,32 @@
 ﻿using FastEndpoints;
+using FluentValidation;
 using MediatR;
 using StarWars.Characters.Application.Characters;
 
 namespace StarWars.Characters.Presentation.Endpoints.V1.Characters;
 
 public class CharacterRemoveEndpoint(ISender sender): Endpoint<CharacterRemoveEndpoint.Request> {
+    #region Request
+
     public class Request {
         [BindFrom("id")]
         public int Id { get; init; }
     }
+
+    private class ReqValidator : Validator<Request> {
+        public ReqValidator() {
+            RuleFor(x => x.Id)
+                .GreaterThan(0)
+                .WithMessage("Неверный идентификатор");
+        }
+    }
+
+    #endregion
     
     public override void Configure() {
         AllowAnonymous();
         Delete("/characters/{id}");
+        Validator<ReqValidator>();
     }
 
     public override Task HandleAsync(Request r, CancellationToken c) {

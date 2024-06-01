@@ -9,6 +9,6 @@ namespace StarWars.Characters.Configuration.MappingProfiles;
 public class PlanetMappingProfile : Profile {
     public PlanetMappingProfile() {
         CreateMap<Planet, PlanetDto>();
-        CreateMap<CreatePlanetRequest, RegisterPlanetCommand>();
+        CreateMap<PlanetCreateEndpoint.CreatePlanetRequest, RegisterPlanetCommand>();
     }
 }
