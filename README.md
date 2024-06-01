@@ -14,6 +14,11 @@
 dotnet tool install --global dotnet-ef
 ```
 
+Из папки проекта
+```
+dotnet-ef database update
+```
+
 Выполнить следующие команды:
 
 Миграция, инициализирующая БД:
