@@ -6,7 +6,7 @@ using IMapper = AutoMapper.IMapper;
 
 namespace StarWars.Characters.Presentation.Endpoints.V1.Characters;
 
-public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<CharacterCreateRequest> {
+public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<CreateCharacterRequest> {
     public override void Configure() {
         AllowAnonymous();
 
@@ -18,7 +18,7 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
         });
     }
     
-    public override async Task HandleAsync(CharacterCreateRequest r, CancellationToken c) {
+    public override async Task HandleAsync(CreateCharacterRequest r, CancellationToken c) {
         var cmd = mapper.Map<RegisterCharacterCommand>(r);
         
         await sender.Send(cmd, c).Result.Match(
@@ -32,7 +32,7 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
     }
 }
 
-public class CharacterCreateRequest {
+public class CreateCharacterRequest {
     public required string Name { get; init; }
     
     public required CharacterBirthDay BirthDay { get; init; }

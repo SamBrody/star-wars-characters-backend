@@ -21,12 +21,9 @@ public sealed class RegisterCharacterCommandHandler(
     ISpeciesRepository speciesRepository,
     IPlanetRepository planetRepository
 ) : IRequestHandler<Command, Result> {
-    public async Task<Result> Handle(Command cmd, CancellationToken c) {
-        var createCharacterResult = await CreateCharacter(cmd, c);
-        return createCharacterResult;
-    }
-    
-    private async Task<Result> CreateCharacter(Command cmd, CancellationToken c) {
+    public async Task<Result> Handle(Command cmd, CancellationToken c) => await CreateCharacterAsync(cmd, c);
+
+    private async Task<Result> CreateCharacterAsync(Command cmd, CancellationToken c) {
         var movies = await movieRepository.GetRangeByIdsOrDefaultAsync(cmd.MovieIds, c);
         var planet = await planetRepository.GetByIdOrDefaultAsync(cmd.PlanetId, c);
         var species = await speciesRepository.GetByIdOrDefaultAsync(cmd.SpeciesId, c);
