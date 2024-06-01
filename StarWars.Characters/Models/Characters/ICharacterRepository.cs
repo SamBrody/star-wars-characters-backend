@@ -1,5 +1,7 @@
 ﻿namespace StarWars.Characters.Models.Characters;
 
 public interface ICharacterRepository : IEntityRepository<Character> {
-    Task RemoveAsync(Character character, CancellationToken c);
+    Character Upsert(Character character);
+    
+    void Remove(Character character);
 }

@@ -12,17 +12,15 @@ public record RemoveCharacterCommand(int Id) : IRequest<Result>, ITransactional;
 internal class RemoveCharacterCommandHandler(ICharacterRepository characterRepository) : IRequestHandler<Command, Result> {
     public async Task<Result> Handle(Command cmd, CancellationToken c) => await RemoveCharacterAsync(cmd, c);
 
-    public async Task<Result> RemoveCharacterAsync(Command cmd, CancellationToken c) {
+    private async Task<Result> RemoveCharacterAsync(Command cmd, CancellationToken c) {
         var character = await characterRepository.GetByIdOrDefaultAsync(cmd.Id, c);
         
         if (character == null) return RemoveCharacterError.CharacterNotFound;
 
-        await characterRepository.RemoveAsync(character, c);
+        characterRepository.Remove(character);
         
         return true;
     }
-
-    
 }
 
 public enum RemoveCharacterError {

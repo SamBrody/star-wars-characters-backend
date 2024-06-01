@@ -11,8 +11,16 @@ using Command = RegisterCharacterCommand;
 using Result = OneOf<int, CreateCharacterError>;
 
 public record RegisterCharacterCommand (
-    string Name, CharacterBirthDay BirthDay, int PlanetId, CharacterGender Gender, int SpeciesId, int Height,
-    string HairColor, string EyeColor, string Description, ICollection<int> MovieIds
+    string            Name,
+    CharacterBirthDay BirthDay,
+    int               PlanetId, 
+    CharacterGender   Gender, 
+    int               SpeciesId,
+    int               Height,
+    string            HairColor,
+    string            EyeColor,
+    string            Description,
+    ICollection<int>  MovieIds
 ) : IRequest<Result>, ITransactional;
 
 public sealed class RegisterCharacterCommandHandler(
@@ -33,16 +41,16 @@ public sealed class RegisterCharacterCommandHandler(
         if (species == null) return CreateCharacterError.SpeciesIsNotFound;
 
         var newCharacter = new Character {
-            Name = cmd.Name,
-            BirthDay = cmd.BirthDay,
-            HomeWorld = planet,
-            Gender = cmd.Gender,
-            Species = species,
-            Height = cmd.Height,
-            HairColor = cmd.HairColor,
-            EyeColor = cmd.EyeColor,
+            Name        = cmd.Name,
+            BirthDay    = cmd.BirthDay,
+            HomeWorld   = planet,
+            Gender      = cmd.Gender,
+            Species     = species,
+            Height      = cmd.Height,
+            HairColor   = cmd.HairColor,
+            EyeColor    = cmd.EyeColor,
             Description = cmd.Description,
-            Movies = movies,
+            Movies      = movies,
         };
         
         return await characterRepository.InsertAsync(newCharacter, c);
