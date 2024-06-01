@@ -41,12 +41,11 @@ public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<
         public ReqValidator() {
             RuleFor(x => x.Id)
                 .GreaterThan(0)
-                .GreaterThan(0)
                 .WithMessage("Неверный идентификатор");
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.BirthDay).NotEmpty();
             RuleFor(x => x.PlanetId).NotEmpty();
-            RuleFor(x => x.Gender).NotEmpty();
+            RuleFor(x => x.Gender).NotNull();
             RuleFor(x => x.SpeciesId).NotEmpty();
             RuleFor(x => x.Height)
                 .GreaterThan(0)
