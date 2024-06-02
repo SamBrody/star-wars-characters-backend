@@ -4,7 +4,7 @@ using StarWars.Characters.Models.Planets;
 
 namespace StarWars.Characters.Configuration.Services;
 
-public class PlanetRepository(StarWarsCharactersDbContext context) : IPlanetRepository {
+public sealed class PlanetRepository(StarWarsCharactersDbContext context) : IPlanetRepository {
     public async Task<ICollection<Planet>> GetManyAsync(CancellationToken c) {
         var planets = await context.Planets.ToListAsync(c);
 
