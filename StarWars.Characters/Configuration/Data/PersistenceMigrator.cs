@@ -17,7 +17,7 @@ public class PersistenceMigrator<TDbContext>(IServiceProvider sp) : IHostedServi
         
         var pendingMigrations = pendingMigrationsResult.ToList();
 
-        if (pendingMigrations.Count > 0) {
+        if (pendingMigrations.Count == 0) {
             logger.LogDebug("No pending migrations to apply");
             
             return;
@@ -25,8 +25,6 @@ public class PersistenceMigrator<TDbContext>(IServiceProvider sp) : IHostedServi
         
         logger.LogDebug("There are {Migrations} migrations to apply", pendingMigrations.Count);
         
-        await dbContext.Database.EnsureCreatedAsync(c);
-
         await dbContext.Database.MigrateAsync(c);
     }
 
