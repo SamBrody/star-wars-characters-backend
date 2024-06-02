@@ -12,25 +12,13 @@ public class StarWarsCharactersDbContext : DbContext {
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
-
+        
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CharacterConfiguration).Assembly);
-        
-        {
-            modelBuilder.Entity<Species>().HasData(
-                new {Id = 1, Name = "Человек", Characters = new List<Character>()},
-                new {Id = 2, Name = "Раса йоды", Characters = new List<Character>()}
-            );
-        
-            modelBuilder.Entity<Planet>().HasData(
-                new {Id = 1, Name = "Татуин ", Characters = new List<Character>()},
-                new {Id = 2, Name = "Альдераан", Characters = new List<Character>()}
-            );
-        
-            modelBuilder.Entity<Movie>().HasData(
-                new {Id = 1, Name = "Звездные войны: Скрытая угроза ", Characters = new List<Character>()},
-                new {Id = 2, Name = "Звездные войны: Атака клонов", Characters = new List<Character>()}
-            );
-        }
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(MovieConfiguration).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(PlanetConfiguration).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(PlanetConfiguration).Assembly);
+
+        SetupSeedDataWithBogus(modelBuilder);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
@@ -43,4 +31,13 @@ public class StarWarsCharactersDbContext : DbContext {
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Planet> Planets { get; set; }
     public DbSet<Species> Species { get; set; }
+
+    private static void SetupSeedDataWithBogus(ModelBuilder modelBuilder) {
+        // Генерация даты при помощи Bogus
+        var databaseSeeder = new DatabaseSeeder();
+
+        modelBuilder.Entity<Movie>().HasData(databaseSeeder.Movies);
+        modelBuilder.Entity<Planet>().HasData(databaseSeeder.Planets);
+        modelBuilder.Entity<Species>().HasData(databaseSeeder.Species);
+    }
 }

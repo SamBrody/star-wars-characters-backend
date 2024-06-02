@@ -125,12 +125,52 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Звездные войны: Скрытая угроза "
+                            Name = "Звездные войны: Эпизод 4 — Новая надежда"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Звездные войны: Атака клонов"
+                            Name = "Звездные войны: Эпизод 5 — Империя наносит ответный удар"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Звездные войны: Эпизод 6 — Возвращение джедая"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Звездные войны: Эпизод 1 — Скрытая угроза"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Звездные войны: Эпизод 2 — Атака клонов"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Звездные войны: Эпизод 3 — Месть ситхов"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Звездные войны: Пробуждение силы"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Изгой-один: Звездные войны. Истории"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Звездные войны: Последние джедаи"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Хан Соло: Звездные войны. Истории"
                         });
                 });
 
@@ -155,12 +195,52 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Татуин "
+                            Name = "Корусант"
                         },
                         new
                         {
                             Id = 2,
+                            Name = "Хосниан-Прайм"
+                        },
+                        new
+                        {
+                            Id = 3,
                             Name = "Альдераан"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Набу"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Татуин"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Коррибан"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Датомир"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Камино"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Мандалор"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Кашиик"
                         });
                 });
 
@@ -185,12 +265,52 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Человек"
+                            Name = "Раса Йода"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Раса йоды"
+                            Name = "Вуки"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Человек"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Кали"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Хатт"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Тви’лек"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Дурос"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Юужань-вонги"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Талз"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Куаррен"
                         });
                 });
 
