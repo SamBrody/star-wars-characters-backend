@@ -1,16 +1,49 @@
 ﻿using FastEndpoints;
+using StarWars.Characters.Configuration.Utils.Filtering;
 using StarWars.Characters.Models.Characters;
 using StarWars.Characters.Presentation.Dtos;
+using StarWars.Characters.Presentation.Utils.Paging;
 using IMapper = AutoMapper.IMapper;
 
 namespace StarWars.Characters.Presentation.Endpoints.V1.Characters;
 
-using Response = ICollection<CharacterDto>;
-
 public class CharacterGetManyEndpoint(
     ICharacterRepository characterRepository,
     IMapper mapper
-) : EndpointWithoutRequest<Response> {
+) : Endpoint<CharacterGetManyEndpoint.Request, CharacterGetManyEndpoint.GetManyCharacterResponse> {
+    #region Request/Response
+
+    public class Request {
+        [BindFrom("page")]
+        public int Page { get; init; } = 1;
+        
+        [BindFrom("per_page")]
+        public int PerPage { get; init; } = 5;
+        
+        [BindFrom("from")]
+        public int? From { get; init; }
+        
+        [BindFrom("to")]
+        public int? To { get; init; }
+    
+        [BindFrom("movies_ids")]
+        public ICollection<int>? MoviesIds { get; init; }
+    
+        [BindFrom("home_world_Id")]
+        public int? HomeWorldId { get; init; }
+    
+        [BindFrom("gender")]
+        public CharacterGender? Gender { get; init; }
+    }
+
+    public class GetManyCharacterResponse {
+        public required ICollection<CharacterDto> Items { get; init; }
+
+        public required PageInfo PageInfo { get; init; }
+    }
+
+    #endregion
+    
     public override void Configure() {
         AllowAnonymous();
         
@@ -22,9 +55,16 @@ public class CharacterGetManyEndpoint(
         });
     }
 
-    public override async Task HandleAsync(CancellationToken c) {
-        var characters = await characterRepository.GetManyAsync(c);
-        var response = mapper.Map<Response>(characters);
+    public override async Task HandleAsync(Request r, CancellationToken c) {
+        var filteringParams = new CharacterFilteringParams(r.From, r.To, r.HomeWorldId, r.Gender, r.MoviesIds);
+        var filtered = await characterRepository.GetManyFilteredAsync(filteringParams, c);
+        
+        var paginated = filtered.Skip((r.Page - 1) * r.PerPage).Take(r.PerPage).ToList();
+        
+        var response = new GetManyCharacterResponse {
+            Items = mapper.Map<ICollection<CharacterDto>>(paginated),
+            PageInfo = PageInfo.Create(filtered.Count, r.Page, r.PerPage)
+        };
         
         await SendOkAsync(response, cancellation: c);
     }
