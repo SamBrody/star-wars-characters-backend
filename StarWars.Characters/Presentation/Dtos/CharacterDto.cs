@@ -1,5 +1,4 @@
 ﻿using StarWars.Characters.Models.Characters;
-using StarWars.Characters.Presentation.Endpoints.V1.Movies;
 
 namespace StarWars.Characters.Presentation.Dtos;
 

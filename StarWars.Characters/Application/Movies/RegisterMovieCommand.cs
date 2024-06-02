@@ -9,7 +9,7 @@ using Result = OneOf<int, CreateMovieError>;
 
 public record RegisterMovieCommand(string Name) : IRequest<Result>, ITransactional;
 
-public sealed class RegisterMovieCommandHandler(IMovieRepository movieRepository) : IRequestHandler<Command, Result> {
+internal class RegisterMovieCommandHandler(IMovieRepository movieRepository) : IRequestHandler<Command, Result> {
     public async Task<Result> Handle(Command cmd, CancellationToken c) => await CreateMovieAsync(cmd, c);
 
     private async Task<Result> CreateMovieAsync(Command cmd, CancellationToken c) {

@@ -10,7 +10,7 @@ using Species = Models.Species.Species;
 
 public record RegisterSpeciesCommand(string Name) : IRequest<Result>, ITransactional;
 
-public sealed class RegisterSpeciesCommandHandler(ISpeciesRepository speciesRepository) : IRequestHandler<Command, Result> {
+internal class RegisterSpeciesCommandHandler(ISpeciesRepository speciesRepository) : IRequestHandler<Command, Result> {
     public async Task<Result> Handle(Command cmd, CancellationToken c) => await CreateSpeciesAsync(cmd, c);
 
     private async Task<Result> CreateSpeciesAsync(Command cmd, CancellationToken c) {

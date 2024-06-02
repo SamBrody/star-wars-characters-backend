@@ -9,7 +9,7 @@ using Result = OneOf<int, CreatePlanetError>;
 
 public record RegisterPlanetCommand(string Name) : IRequest<Result>, ITransactional;
 
-public sealed class RegisterPlanetCommandHandler(IPlanetRepository planetRepository) : IRequestHandler<Command, Result> {
+internal class RegisterPlanetCommandHandler(IPlanetRepository planetRepository) : IRequestHandler<Command, Result> {
     public async Task<Result> Handle(Command cmd, CancellationToken c) => await CreatePlanetAsync(cmd, c);
 
     private async Task<Result> CreatePlanetAsync(Command cmd, CancellationToken c) {

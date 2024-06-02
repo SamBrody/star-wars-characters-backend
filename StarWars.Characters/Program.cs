@@ -35,6 +35,7 @@ builder.Services.AddDbContext<StarWarsCharactersDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddHostedService<PersistenceMigrator<StarWarsCharactersDbContext>>();
 
+// Register repositories
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<ISpeciesRepository, SpeciesRepository>();

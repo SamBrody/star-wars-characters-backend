@@ -24,7 +24,7 @@ public record RegisterCharacterCommand (
     ICollection<int>  MovieIds
 ) : IRequest<Result>, ITransactional;
 
-public sealed class RegisterCharacterCommandHandler(
+internal class RegisterCharacterCommandHandler(
     ICharacterRepository characterRepository,
     IMovieRepository movieRepository,
     ISpeciesRepository speciesRepository,

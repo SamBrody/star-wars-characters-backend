@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using StarWars.Characters.Models.Characters;
 using OneOf;
+using StarWars.Characters.Models.Characters;
 using StarWars.Characters.Models.Movies;
 using StarWars.Characters.Models.Planets;
 using StarWars.Characters.Models.Species;
@@ -24,7 +24,7 @@ public record UpdateCharacterCommand(
     ICollection<int>  MovieIds
 ) : IRequest<Result>, ITransactional;
 
-public class UpdateCharacterCommandHandler(
+internal class UpdateCharacterCommandHandler(
     ICharacterRepository characterRepository,
     IMovieRepository movieRepository,
     ISpeciesRepository speciesRepository,

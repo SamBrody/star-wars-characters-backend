@@ -1,7 +1,6 @@
 ﻿using FastEndpoints;
 using FluentValidation;
 using OneOf;
-using StarWars.Characters.Models.Movies;
 using StarWars.Characters.Models.Planets;
 using StarWars.Characters.Presentation.Dtos;
 using IMapper = AutoMapper.IMapper;

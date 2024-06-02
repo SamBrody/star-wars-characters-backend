@@ -1,5 +1,4 @@
-﻿
-using MediatR;
+﻿using MediatR;
 using StarWars.Characters.Application;
 using StarWars.Characters.Configuration.Data;
 using Microsoft.EntityFrameworkCore;
