@@ -13,6 +13,11 @@ public class Character: BaseModel {
     public string Name { get; set; }
     
     /// <summary>
+    /// Имя персонажа в оригинале
+    /// </summary>
+    public string OriginalName { get; set; }
+    
+    /// <summary>
     /// Дата рождения персонажа
     /// </summary>
     public CharacterBirthDay BirthDay { get; set; }

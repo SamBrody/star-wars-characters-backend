@@ -17,6 +17,8 @@ public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<
         public int Id { get; init; }
     
         public string Name { get; init; }
+        
+        public string OriginalName { get; init; }
     
         public CharacterBirthDay BirthDay { get; init; }
     
@@ -43,6 +45,7 @@ public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<
                 .GreaterThan(0)
                 .WithMessage("Неверный идентификатор");
             RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.OriginalName).NotEmpty();
             RuleFor(x => x.BirthDay).NotEmpty();
             RuleFor(x => x.PlanetId).NotEmpty();
             RuleFor(x => x.Gender).NotNull();

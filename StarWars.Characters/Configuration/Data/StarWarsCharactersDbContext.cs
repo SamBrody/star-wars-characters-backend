@@ -8,9 +8,7 @@ using StarWars.Characters.Models.Species;
 namespace StarWars.Characters.Configuration.Data;
 
 public class StarWarsCharactersDbContext : DbContext {
-    public StarWarsCharactersDbContext(DbContextOptions<StarWarsCharactersDbContext> options) : base(options) {
-        Database.EnsureCreated();
-    }
+    public StarWarsCharactersDbContext(DbContextOptions<StarWarsCharactersDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);

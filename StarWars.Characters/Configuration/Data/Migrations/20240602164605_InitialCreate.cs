@@ -58,6 +58,7 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     name = table.Column<string>(type: "TEXT", nullable: false),
+                    original_name = table.Column<string>(type: "TEXT", nullable: false),
                     home_world_id = table.Column<int>(type: "INTEGER", nullable: false),
                     gender = table.Column<int>(type: "INTEGER", nullable: false),
                     species_id = table.Column<int>(type: "INTEGER", nullable: false),

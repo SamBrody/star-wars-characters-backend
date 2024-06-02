@@ -75,6 +75,11 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("name");
 
+                    b.Property<string>("OriginalName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("original_name");
+
                     b.Property<int>("SpeciesId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("species_id");

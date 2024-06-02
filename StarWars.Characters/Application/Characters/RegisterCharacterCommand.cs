@@ -12,6 +12,7 @@ using Result = OneOf<int, CreateCharacterError>;
 
 public record RegisterCharacterCommand (
     string            Name,
+    string            OriginalName,
     CharacterBirthDay BirthDay,
     int               PlanetId, 
     CharacterGender   Gender, 
@@ -41,16 +42,17 @@ public sealed class RegisterCharacterCommandHandler(
         if (species == null) return CreateCharacterError.SpeciesIsNotFound;
 
         var newCharacter = new Character {
-            Name        = cmd.Name,
-            BirthDay    = cmd.BirthDay,
-            HomeWorld   = planet,
-            Gender      = cmd.Gender,
-            Species     = species,
-            Height      = cmd.Height,
-            HairColor   = cmd.HairColor,
-            EyeColor    = cmd.EyeColor,
-            Description = cmd.Description,
-            Movies      = movies,
+            Name         = cmd.Name,
+            OriginalName = cmd.OriginalName,
+            BirthDay     = cmd.BirthDay,
+            HomeWorld    = planet,
+            Gender       = cmd.Gender,
+            Species      = species,
+            Height       = cmd.Height,
+            HairColor    = cmd.HairColor,
+            EyeColor     = cmd.EyeColor,
+            Description  = cmd.Description,
+            Movies       = movies,
         };
         
         return await characterRepository.InsertAsync(newCharacter, c);

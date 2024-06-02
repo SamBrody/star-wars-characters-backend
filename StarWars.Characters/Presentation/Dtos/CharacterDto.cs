@@ -8,6 +8,8 @@ public class CharacterDto {
     
     public string Name { get; init; }
     
+    public string OriginalName { get; init; }
+    
     public CharacterBirthDay BirthDay { get; init; }
     
     public PlanetDto HomeWorld { get; init; }

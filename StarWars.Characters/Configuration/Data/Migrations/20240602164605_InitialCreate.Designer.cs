@@ -11,7 +11,7 @@ using StarWars.Characters.Configuration.Data;
 namespace StarWars.Characters.Configuration.Data.Migrations
 {
     [DbContext(typeof(StarWarsCharactersDbContext))]
-    [Migration("20240602123627_InitialCreate")]
+    [Migration("20240602164605_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -77,6 +77,11 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("name");
+
+                    b.Property<string>("OriginalName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("original_name");
 
                     b.Property<int>("SpeciesId")
                         .HasColumnType("INTEGER")

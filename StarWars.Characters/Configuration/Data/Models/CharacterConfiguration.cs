@@ -15,6 +15,9 @@ public class CharacterConfiguration : IEntityTypeConfiguration<Character> {
 
         b.Property(x => x.Name)
             .IsRequired();
+        
+        b.Property(x => x.OriginalName)
+            .IsRequired();
 
         b.ComplexProperty(x => x.BirthDay, y => {
             y.Property(z => z.Era).IsRequired();

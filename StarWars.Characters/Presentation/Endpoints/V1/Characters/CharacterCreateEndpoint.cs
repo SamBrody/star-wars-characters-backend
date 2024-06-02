@@ -12,6 +12,8 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
 
     public class CreateCharacterRequest {
         public required string Name { get; init; }
+        
+        public required string OriginalName { get; init; }
     
         public required CharacterBirthDay BirthDay { get; init; }
     
@@ -35,6 +37,7 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
     private class ReqValidator : Validator<CreateCharacterRequest> {
         public ReqValidator() {
             RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.OriginalName).NotEmpty();
             RuleFor(x => x.BirthDay).NotEmpty();
             RuleFor(x => x.PlanetId).NotEmpty();
             RuleFor(x => x.Gender).NotNull();
