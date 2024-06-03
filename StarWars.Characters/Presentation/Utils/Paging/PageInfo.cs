@@ -22,6 +22,9 @@ public class PageInfo {
     public long Pages { get; init; }
 
     public static PageInfo Create(int items, int page, int perPage) {
-        return new() { Items = items, Page = page, PerPage = perPage, Pages = items / perPage };
+        var remainder = items % perPage;
+        var pages =  items / perPage;
+        
+        return new() { Items = items, Page = page, PerPage = perPage, Pages = remainder == 0 ? pages : pages +1 };
     }
 }
