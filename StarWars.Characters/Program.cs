@@ -30,6 +30,7 @@ builder.Services
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCors();
 
 builder.Services.AddDbContext<StarWarsCharactersDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -60,6 +61,8 @@ if (app.Environment.IsDevelopment()) {
     var mapper = app.Services.GetService<IMapper>();
     mapper.ConfigurationProvider.AssertConfigurationIsValid();
 }
+
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(o => true));
 
 app.UseFastEndpoints(cfg => cfg.Versioning.PrependToRoute = true);
 app.UseSwaggerGen();
