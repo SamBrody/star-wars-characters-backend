@@ -42,8 +42,8 @@ public sealed class CharacterRepository(StarWarsCharactersDbContext context) : I
         if (fp.HomeWorldId != null) characters = characters.Where(x => x.HomeWorld.Id == fp.HomeWorldId);
         if (fp.Gender != null) characters = characters.Where(x => x.Gender == fp.Gender);
         if (fp.MoviesIds != null) characters = characters.Where(x => x.Movies.Select(y => y.Id).Intersect(fp.MoviesIds).Any());
-        if (fp.From != null) characters = characters.Where(x => x.BirthDay.Year >= fp.From);
-        if (fp.To != null) characters = characters.Where(x => x.BirthDay.Year <= fp.To);
+        if (fp.BornYearFrom != null) characters = characters.Where(x => x.BirthDay.Year >= fp.BornYearFrom);
+        if (fp.BornYearTo != null) characters = characters.Where(x => x.BirthDay.Year <= fp.BornYearTo);
         
         return await characters.ToListAsync(c);
     }
