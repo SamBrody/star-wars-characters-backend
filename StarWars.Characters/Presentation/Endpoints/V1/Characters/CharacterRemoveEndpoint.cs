@@ -25,8 +25,14 @@ public class CharacterRemoveEndpoint(ISender sender): Endpoint<CharacterRemoveEn
     
     public override void Configure() {
         AllowAnonymous();
+        
         Delete("/characters/{id}");
+        Version(1);
         Validator<ReqValidator>();
+        
+        Summary(s => {
+            s.Summary = "Удаление Персонажа";
+        });
     }
 
     public override Task HandleAsync(Request r, CancellationToken c) {
