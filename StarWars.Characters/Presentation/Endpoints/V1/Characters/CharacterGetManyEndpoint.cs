@@ -20,11 +20,11 @@ public class CharacterGetManyEndpoint(
         [BindFrom("per_page")]
         public int PerPage { get; init; } = 5;
         
-        [BindFrom("born_year_from")]
-        public int? BornYearFrom { get; init; }
+        [BindFrom("year_lower_bound")]
+        public int? YearLowerBound { get; init; }
         
-        [BindFrom("born_year_to")]
-        public int? BornYearTo { get; init; }
+        [BindFrom("year_upper_bound")]
+        public int? YearUpperBound { get; init; }
     
         [BindFrom("movie_id")]
         public ICollection<int>? MoviesIds { get; init; }
@@ -56,7 +56,7 @@ public class CharacterGetManyEndpoint(
     }
 
     public override async Task HandleAsync(Request r, CancellationToken c) {
-        var filteringParams = new CharacterFilteringParams(r.BornYearFrom, r.BornYearTo, r.HomeWorldId, r.Gender, r.MoviesIds);
+        var filteringParams = new CharacterFilteringParams(r.YearLowerBound, r.YearUpperBound, r.HomeWorldId, r.Gender, r.MoviesIds);
         var filtered = await characterRepository.GetManyFilteredAsync(filteringParams, c);
         
         var paginated = filtered.Skip((r.Page - 1) * r.PerPage).Take(r.PerPage).ToList();
