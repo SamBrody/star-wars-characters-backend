@@ -22,6 +22,8 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
         public required CharacterGender Gender { get; init; }
     
         public required int SpeciesId { get; init; }
+        
+        public required int CreatedById { get; init; }
     
         public required int Height { get; init; }
     
@@ -46,6 +48,7 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
             RuleFor(x => x.PlanetId).NotEmpty();
             RuleFor(x => x.Gender).NotNull();
             RuleFor(x => x.SpeciesId).NotEmpty();
+            RuleFor(x => x.CreatedById).NotEmpty();
             RuleFor(x => x.Height)
                 .GreaterThan(0)
                 .WithMessage("Рост должен быть не отрицательным и больше 0")

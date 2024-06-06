@@ -1,7 +1,10 @@
 using System.Reflection;
+using System.Text;
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using StarWars.Characters.Configuration.Data;
 using StarWars.Characters.Configuration.MappingProfiles;
 using StarWars.Characters.Configuration.Pipeline;
@@ -10,6 +13,7 @@ using StarWars.Characters.Models.Characters;
 using StarWars.Characters.Models.Movies;
 using StarWars.Characters.Models.Planets;
 using StarWars.Characters.Models.Species;
+using StarWars.Characters.Models.Users;
 using IMapper = AutoMapper.IMapper;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,10 +45,32 @@ builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 builder.Services.AddScoped<IPlanetRepository, PlanetRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
     cfg.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
+});
+
+// Set-up Authentication
+var appAuth = builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+
+var signingKey = builder.Configuration.GetValue<string>("SigningKey");
+
+var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
+
+appAuth.AddJwtBearer(opt => {
+    opt.TokenValidationParameters.IssuerSigningKey = securityKey;
+    opt.TokenValidationParameters.ValidateIssuerSigningKey = true;
+
+    opt.TokenValidationParameters.ValidateLifetime = true;
+    opt.TokenValidationParameters.ClockSkew = TimeSpan.Parse("23:59:59.9999");
+
+    opt.TokenValidationParameters.ValidAudience = null;
+    opt.TokenValidationParameters.ValidateAudience = false;
+
+    opt.TokenValidationParameters.ValidIssuer = null;
+    opt.TokenValidationParameters.ValidateIssuer = false;
 });
 
 // Configure Automapper
@@ -52,7 +78,8 @@ builder.Services.AddAutoMapper(
     typeof(CharacterMappingProfile).Assembly,
     typeof(MovieMappingProfile).Assembly,
     typeof(SpeciesMappingProfile).Assembly,
-    typeof(PlanetMappingProfile).Assembly
+    typeof(PlanetMappingProfile).Assembly,
+    typeof(UserMappingProfile).Assembly
 );
 
 var app = builder.Build();

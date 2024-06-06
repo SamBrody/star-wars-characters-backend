@@ -11,6 +11,7 @@ public sealed class CharacterRepository(StarWarsCharactersDbContext context) : I
             .Include(x => x.Species)
             .Include(x => x.HomeWorld)
             .Include(x => x.Movies)
+            .Include(x => x.CreatedBy)
             .ToListAsync(c);
 
         return characters;
@@ -21,6 +22,7 @@ public sealed class CharacterRepository(StarWarsCharactersDbContext context) : I
             .Include(x => x.Species)
             .Include(x => x.HomeWorld)
             .Include(x => x.Movies)
+            .Include(x => x.CreatedBy)
             .FirstOrDefaultAsync(x => x.Id == id, c);
 
         return character;
@@ -37,6 +39,7 @@ public sealed class CharacterRepository(StarWarsCharactersDbContext context) : I
             .Include(x => x.Species)
             .Include(x => x.HomeWorld)
             .Include(x => x.Movies)
+            .Include(x => x.CreatedBy)
             .AsNoTracking();
 
         if (fp.HomeWorldId != null) characters = characters.Where(x => x.HomeWorld.Id == fp.HomeWorldId);
