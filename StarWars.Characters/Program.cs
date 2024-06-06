@@ -1,10 +1,8 @@
 using System.Reflection;
-using System.Text;
 using FastEndpoints;
+using FastEndpoints.Security;
 using FastEndpoints.Swagger;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using StarWars.Characters.Configuration.Data;
 using StarWars.Characters.Configuration.MappingProfiles;
 using StarWars.Characters.Configuration.Pipeline;
@@ -17,20 +15,6 @@ using StarWars.Characters.Models.Users;
 using IMapper = AutoMapper.IMapper;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services
-    .AddFastEndpoints()
-    .SwaggerDocument(o => {
-        o.DocumentSettings = s => {
-            s.Title = "StarWars.Characters API";
-            s.Version = "v1";
-        };
-        o.MaxEndpointVersion = 1;
-
-        o.ShortSchemaNames = true;
-    });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -53,26 +37,20 @@ builder.Services.AddMediatR(cfg => {
 });
 
 // Set-up Authentication
-var appAuth = builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+builder.Services
+    .AddAuthenticationJwtBearer(s => s.SigningKey = "The secret used to sign tokens")
+    .AddAuthorization()
+    .AddFastEndpoints()
+    .SwaggerDocument(o => {
+        o.DocumentSettings = s => {
+            s.Title = "StarWars.Characters API";
+            s.Version = "v1";
+        };
+        o.MaxEndpointVersion = 1;
 
-var signingKey = builder.Configuration.GetValue<string>("SigningKey");
-
-var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
-
-appAuth.AddJwtBearer(opt => {
-    opt.TokenValidationParameters.IssuerSigningKey = securityKey;
-    opt.TokenValidationParameters.ValidateIssuerSigningKey = true;
-
-    opt.TokenValidationParameters.ValidateLifetime = true;
-    opt.TokenValidationParameters.ClockSkew = TimeSpan.Parse("23:59:59.9999");
-
-    opt.TokenValidationParameters.ValidAudience = null;
-    opt.TokenValidationParameters.ValidateAudience = false;
-
-    opt.TokenValidationParameters.ValidIssuer = null;
-    opt.TokenValidationParameters.ValidateIssuer = false;
-});
-
+        o.ShortSchemaNames = true;
+    });
+    
 // Configure Automapper
 builder.Services.AddAutoMapper(
     typeof(CharacterMappingProfile).Assembly,
@@ -91,7 +69,10 @@ if (app.Environment.IsDevelopment()) {
 
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(o => true));
 
-app.UseFastEndpoints(cfg => cfg.Versioning.PrependToRoute = true);
+app.UseAuthentication()
+   .UseAuthentication()
+   .UseFastEndpoints(cfg => cfg.Versioning.PrependToRoute = true);
+
 app.UseSwaggerGen();
 
 app.UseHttpsRedirection();
