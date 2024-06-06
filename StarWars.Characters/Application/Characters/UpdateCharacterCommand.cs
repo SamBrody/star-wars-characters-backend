@@ -21,7 +21,8 @@ public record UpdateCharacterCommand(
     string            HairColor,
     string            EyeColor,
     string            Description,
-    ICollection<int>  MovieIds
+    ICollection<int>  MovieIds,
+    int               UserId
 ) : IRequest<Result>, ITransactional;
 
 internal class UpdateCharacterCommandHandler(
@@ -45,6 +46,8 @@ internal class UpdateCharacterCommandHandler(
         var movies = await movieRepository.GetRangeByIdsOrDefaultAsync(cmd.MovieIds, c);
         if (movies == null) return UpdateCharacterErrors.MoviesNotFound;
 
+        if (character.CreatedBy.Id != cmd.UserId) return UpdateCharacterErrors.OnlyAuthorCanUpdateCharacter;
+
         character.Name        = cmd.Name;
         character.BirthDay    = cmd.BirthDay;
         character.HomeWorld   = planet;
@@ -65,4 +68,5 @@ public enum UpdateCharacterErrors {
     HoweWorldNotFound,
     SpeciesIsNotFound,
     MoviesNotFound,
+    OnlyAuthorCanUpdateCharacter,
 };

@@ -37,6 +37,8 @@ public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<
         public string Description { get; init; }
     
         public ICollection<int> MovieIds { get; init; }
+        
+        public int UserId { get; init; }
     }
     
     private class ReqValidator : Validator<UpdateCharacterRequest> {
@@ -62,6 +64,7 @@ public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<
             RuleFor(x => x.EyeColor).NotEmpty();
             RuleFor(x => x.Description).NotEmpty();
             RuleFor(x => x.MovieIds).NotEmpty();
+            RuleFor(x => x.UserId).NotEmpty();
         }
     }
 
