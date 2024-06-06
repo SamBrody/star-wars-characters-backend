@@ -6,26 +6,26 @@ using StarWars.Characters.Models.Users;
 
 namespace StarWars.Characters.Presentation.Endpoints.V1.Access;
 
-using Result = OneOf<bool, LoginEndpoint.LoginError>;
+using Result = OneOf<bool, SignInEndpoint.SignInError>;
 
-public class LoginEndpoint(IUserRepository userRepository)
-    : Endpoint<LoginEndpoint.LoginRequest, LoginEndpoint.LoginResposne> {
+public class SignInEndpoint(IUserRepository userRepository)
+    : Endpoint<SignInEndpoint.SignInRequest, SignInEndpoint.SignInResposne> {
     #region Request/Response
 
-    public class LoginRequest {
+    public class SignInRequest {
         public required string Login { get; init; }
 
         public required string Password { get; init; }
     }
 
-    private class ReqValidator : Validator<LoginRequest> {
+    private class ReqValidator : Validator<SignInRequest> {
         public ReqValidator() {
             RuleFor(x => x.Login).NotEmpty();
             RuleFor(x => x.Password).NotEmpty();
         }
     }
 
-    public class LoginResposne {
+    public class SignInResposne {
         public string Login { get; init; }
 
         public string Token { get; init; }
@@ -33,7 +33,7 @@ public class LoginEndpoint(IUserRepository userRepository)
 
     #endregion
 
-    public enum LoginError {
+    public enum SignInError {
         IncorrectLogin,
         IncorrectPassword,
     }
@@ -46,7 +46,7 @@ public class LoginEndpoint(IUserRepository userRepository)
         Validator<ReqValidator>();
     }
 
-    public override Task HandleAsync(LoginRequest r, CancellationToken c) {
+    public override Task HandleAsync(SignInRequest r, CancellationToken c) {
         var getUserResult = ValidateUserAsync(r, c);
 
         return getUserResult.Result.Match(
@@ -57,7 +57,7 @@ public class LoginEndpoint(IUserRepository userRepository)
                         o.ExpireAt = DateTime.UtcNow.AddDays(1);
                     }
                 );
-                var response = new LoginResposne {Login = r.Login, Token = jwtToken};
+                var response = new SignInResposne {Login = r.Login, Token = jwtToken};
                 
                 return SendOkAsync(response, c);
             },
@@ -69,11 +69,11 @@ public class LoginEndpoint(IUserRepository userRepository)
         );
     }
 
-    private async Task<Result> ValidateUserAsync(LoginRequest r, CancellationToken c) {
+    private async Task<Result> ValidateUserAsync(SignInRequest r, CancellationToken c) {
         var user = await userRepository.GetUserByLoginOrDefaultAsync(r.Login, c);
 
-        if (user == null) return LoginError.IncorrectLogin;
-        if (user.Password != r.Password) return LoginError.IncorrectPassword;
+        if (user == null) return SignInError.IncorrectLogin;
+        if (user.Password != r.Password) return SignInError.IncorrectPassword;
 
         return true;
     }

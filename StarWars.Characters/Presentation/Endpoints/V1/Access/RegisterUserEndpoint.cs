@@ -27,7 +27,7 @@ public class RegisterUserEndpoint(ISender sender, IMapper mapper) : Endpoint<Reg
     public override void Configure() {
         AllowAnonymous();
         
-        Post("/users/register");
+        Post("/access/register");
         Version(1);
         Validator<ReqValidator>();
 
