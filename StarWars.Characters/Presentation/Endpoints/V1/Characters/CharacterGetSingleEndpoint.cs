@@ -34,7 +34,9 @@ public class CharacterGetSingleEndpoint(
         CharacterNotFound
     }
     
-    public override void Configure() {
+    public override void Configure() {AllowAnonymous();
+        AllowAnonymous();
+        
         Get("/characters/{id}");
         Version(1);
         Validator<ReqValidator>();

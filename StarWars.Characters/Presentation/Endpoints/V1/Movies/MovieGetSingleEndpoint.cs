@@ -35,6 +35,8 @@ public class MovieGetSingleEndpoint(
     }
     
     public override void Configure() {
+        AllowAnonymous();
+        
         Get("/movies/{id}");
         Version(1);
         Validator<ReqValidator>();
