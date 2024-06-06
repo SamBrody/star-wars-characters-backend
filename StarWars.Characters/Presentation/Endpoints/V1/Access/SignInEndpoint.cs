@@ -6,7 +6,7 @@ using StarWars.Characters.Models.Users;
 
 namespace StarWars.Characters.Presentation.Endpoints.V1.Access;
 
-using Result = OneOf<bool, SignInEndpoint.SignInError>;
+using Result = OneOf<int, SignInEndpoint.SignInError>;
 
 public class SignInEndpoint(IUserRepository userRepository)
     : Endpoint<SignInEndpoint.SignInRequest, SignInEndpoint.SignInResposne> {
@@ -50,11 +50,13 @@ public class SignInEndpoint(IUserRepository userRepository)
         var getUserResult = ValidateUserAsync(r, c);
 
         return getUserResult.Result.Match(
-            _ => {
+            id => {
                 var jwtToken = JwtBearer.CreateToken(
                     o => {
                         o.SigningKey = "A_Secret_Token_Signing_Key_Longer_Than_32_Characters";
                         o.ExpireAt = DateTime.UtcNow.AddDays(1);
+                        // o.User.Claims.Add(("UserId", id.ToString()));
+                        o.User["UserId"] = id.ToString();
                     }
                 );
                 var response = new SignInResposne {Login = r.Login, Token = jwtToken};
@@ -75,6 +77,6 @@ public class SignInEndpoint(IUserRepository userRepository)
         if (user == null) return SignInError.IncorrectLogin;
         if (user.Password != r.Password) return SignInError.IncorrectPassword;
 
-        return true;
+        return user.Id;
     }
 }
