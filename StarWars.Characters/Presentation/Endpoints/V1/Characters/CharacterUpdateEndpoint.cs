@@ -71,8 +71,6 @@ public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<
     #endregion
     
     public override void Configure() {
-        AllowAnonymous();
-        
         Put("characters/{id}");
         Version(1);
         Validator<ReqValidator>();

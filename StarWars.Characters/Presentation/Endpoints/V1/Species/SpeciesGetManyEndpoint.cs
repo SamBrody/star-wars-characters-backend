@@ -12,8 +12,6 @@ public class SpeciesGetManyEndpoint(
     IMapper mapper
 ) : EndpointWithoutRequest<Response> {
     public override void Configure() {
-        AllowAnonymous();
-        
         Get("/species");
         Version(1);
         

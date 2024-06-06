@@ -12,8 +12,6 @@ public class PlanetGetManyEndpoint(
     IMapper mapper
 ) : EndpointWithoutRequest<Response> {
     public override void Configure() {
-        AllowAnonymous();
-        
         Get("/planets");
         Version(1);
         

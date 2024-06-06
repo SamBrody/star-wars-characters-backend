@@ -20,8 +20,6 @@ public class SpeciesCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<Sp
     #endregion
     
     public override void Configure() {
-        AllowAnonymous();
-
         Post("/species");
         Version(1);
         Validator<ReqValidator>();

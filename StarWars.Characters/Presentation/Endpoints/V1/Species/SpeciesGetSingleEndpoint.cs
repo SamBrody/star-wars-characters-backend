@@ -36,8 +36,6 @@ public class SpeciesGetSingleEndpoint(
     }
     
     public override void Configure() {
-        AllowAnonymous();
-        
         Get("/species/{id}");
         Version(1);
         Validator<ReqValidator>();

@@ -9,8 +9,6 @@ using Response = ICollection<MovieDto>;
 
 public class MovieGetManyEndpoint(IMovieRepository movieRepository, IMapper mapper) : EndpointWithoutRequest<Response> {
     public override void Configure() {
-        AllowAnonymous();
-        
         Get("/movies");
         Version(1);
         

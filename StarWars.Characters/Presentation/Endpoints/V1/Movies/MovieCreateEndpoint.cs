@@ -20,8 +20,6 @@ public class MovieCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<Movi
     #endregion
     
     public override void Configure() {
-        AllowAnonymous();
-
         Post("/movies");
         Version(1);
         Validator<ReqValidator>();

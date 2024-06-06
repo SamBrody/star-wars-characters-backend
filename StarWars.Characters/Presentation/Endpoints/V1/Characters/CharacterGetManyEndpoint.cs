@@ -45,8 +45,6 @@ public class CharacterGetManyEndpoint(
     #endregion
     
     public override void Configure() {
-        AllowAnonymous();
-        
         Get("/characters");
         Version(1);
         

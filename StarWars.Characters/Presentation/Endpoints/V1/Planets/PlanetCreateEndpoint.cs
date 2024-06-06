@@ -20,8 +20,6 @@ public class PlanetCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<Pla
     #endregion
     
     public override void Configure() {
-        AllowAnonymous();
-
         Post("/planets");
         Version(1);
 

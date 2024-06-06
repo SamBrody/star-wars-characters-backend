@@ -35,8 +35,6 @@ public class CharacterGetSingleEndpoint(
     }
     
     public override void Configure() {
-        AllowAnonymous();
-        
         Get("/characters/{id}");
         Version(1);
         Validator<ReqValidator>();

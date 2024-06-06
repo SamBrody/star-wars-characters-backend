@@ -53,7 +53,7 @@ public class SignInEndpoint(IUserRepository userRepository)
             _ => {
                 var jwtToken = JwtBearer.CreateToken(
                     o => {
-                        o.SigningKey = "Star wars characters super secret hope this enough";
+                        o.SigningKey = "A_Secret_Token_Signing_Key_Longer_Than_32_Characters";
                         o.ExpireAt = DateTime.UtcNow.AddDays(1);
                     }
                 );

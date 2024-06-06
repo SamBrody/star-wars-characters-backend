@@ -63,8 +63,6 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
     #endregion
     
     public override void Configure() {
-        AllowAnonymous();
-
         Post("/characters");
         Version(1);
         Validator<ReqValidator>();

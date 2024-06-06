@@ -35,8 +35,6 @@ public class PlanetGetSingleEndpoint(
     }
     
     public override void Configure() {
-        AllowAnonymous();
-        
         Get("/planets/{id}");
         Version(1);
         Validator<ReqValidator>();

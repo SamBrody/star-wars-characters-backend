@@ -38,7 +38,7 @@ builder.Services.AddMediatR(cfg => {
 
 // Set-up Authentication
 builder.Services
-    .AddAuthenticationJwtBearer(s => s.SigningKey = "The secret used to sign tokens")
+    .AddAuthenticationJwtBearer(s => s.SigningKey = "A_Secret_Token_Signing_Key_Longer_Than_32_Characters")
     .AddAuthorization()
     .AddFastEndpoints()
     .SwaggerDocument(o => {
@@ -70,7 +70,7 @@ if (app.Environment.IsDevelopment()) {
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(o => true));
 
 app.UseAuthentication()
-   .UseAuthentication()
+   .UseAuthorization ()
    .UseFastEndpoints(cfg => cfg.Versioning.PrependToRoute = true);
 
 app.UseSwaggerGen();
