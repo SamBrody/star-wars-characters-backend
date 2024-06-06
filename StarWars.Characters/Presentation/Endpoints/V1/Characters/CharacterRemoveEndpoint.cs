@@ -11,8 +11,6 @@ public class CharacterRemoveEndpoint(ISender sender): Endpoint<CharacterRemoveEn
     public class Request {
         [BindFrom("id")]
         public int Id { get; init; }
-        
-        public int UserId { get; init; }
     }
 
     private class ReqValidator : Validator<Request> {
@@ -20,7 +18,6 @@ public class CharacterRemoveEndpoint(ISender sender): Endpoint<CharacterRemoveEn
             RuleFor(x => x.Id)
                 .GreaterThan(0)
                 .WithMessage("Неверный идентификатор");
-            RuleFor(x => x.UserId).NotEmpty();
         }
     }
 
@@ -37,7 +34,7 @@ public class CharacterRemoveEndpoint(ISender sender): Endpoint<CharacterRemoveEn
     }
 
     public override Task HandleAsync(Request r, CancellationToken c) {
-        return sender.Send(new RemoveCharacterCommand(r.Id, r.UserId), c).Result.Match(
+        return sender.Send(new RemoveCharacterCommand(r.Id, 0), c).Result.Match(
             _ => SendOkAsync(c),
             e => {
                 AddError(e.ToString());
