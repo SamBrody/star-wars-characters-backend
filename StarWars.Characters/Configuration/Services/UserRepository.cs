@@ -22,4 +22,10 @@ public class UserRepository(StarWarsCharactersDbContext context) : IUserReposito
 
         return result.Entity.Id;
     }
+
+    public async Task<User?> GetUserByLoginOrDefaultAsync(string login, CancellationToken c) {
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Login == login, c);
+
+        return user;
+    }
 }

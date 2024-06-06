@@ -13,10 +13,16 @@ internal class RegisterUserCommandHandler(IUserRepository userRepository) : IReq
     public async Task<Result> Handle(Command cmd, CancellationToken c) => await CreateUserAsync(cmd, c);
 
     private async Task<Result> CreateUserAsync(Command cmd, CancellationToken c) {
+        var user = await userRepository.GetUserByLoginOrDefaultAsync(cmd.Login, c);
+
+        if (user != null) return RegisterUserError.LoginIsAlreadyTaken;
+        
         var newUser = new User { Login = cmd.Login, Password = cmd.Password };
 
         return await userRepository.InsertAsync(newUser, c);
     }
 }
 
-public enum RegisterUserError { }
+public enum RegisterUserError {
+    LoginIsAlreadyTaken,
+}

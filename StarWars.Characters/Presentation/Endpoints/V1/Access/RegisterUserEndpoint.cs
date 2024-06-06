@@ -44,7 +44,7 @@ public class RegisterUserEndpoint(ISender sender, IMapper mapper) : Endpoint<Reg
             e => {
                 AddError(e.ToString());
 
-                return SendOkAsync(cancellation: c);
+                return SendErrorsAsync(cancellation: c);
             }
         );
     }
