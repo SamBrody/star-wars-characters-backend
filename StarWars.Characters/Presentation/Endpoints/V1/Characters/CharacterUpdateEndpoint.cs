@@ -1,4 +1,5 @@
 ﻿using FastEndpoints;
+using FastEndpoints.Security;
 using FluentValidation;
 using MediatR;
 using StarWars.Characters.Application.Characters;
@@ -78,7 +79,10 @@ public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<
     }
 
     public override Task HandleAsync(Request r, CancellationToken c) {
-        var cmd = mapper.Map<UpdateCharacterCommand>(r);
+        var claimValue = HttpContext.User.ClaimValue("UserId");
+        Int32.TryParse(claimValue, out var userId);
+
+        var cmd = MapToCommand(r, userId);
 
         return sender.Send(cmd, c).Result.Match(
             _ => SendOkAsync(c),
@@ -88,5 +92,25 @@ public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<
                 return SendErrorsAsync(cancellation: c);
             }
         );
+    }
+    
+    private UpdateCharacterCommand MapToCommand(UpdateCharacterRequest r, int userId) {
+        var cmd = new UpdateCharacterCommand(
+            Id:           r.Id,
+            Name:         r.Name,
+            OriginalName: r.OriginalName,
+            BirthDay:     r.BirthDay,
+            PlanetId:     r.PlanetId,
+            Gender:       r.Gender,
+            SpeciesId:    r.SpeciesId,
+            Height:       r.Height,
+            HairColor:    r.HairColor,
+            EyeColor:     r.EyeColor,
+            Description:  r.Description,
+            MovieIds:     r.MovieIds,
+            UserId:       userId
+        );
+
+        return cmd;
     }
 }

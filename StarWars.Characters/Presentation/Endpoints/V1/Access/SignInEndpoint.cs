@@ -55,7 +55,7 @@ public class SignInEndpoint(IUserRepository userRepository)
                     o => {
                         o.SigningKey = "A_Secret_Token_Signing_Key_Longer_Than_32_Characters";
                         o.ExpireAt = DateTime.UtcNow.AddDays(1);
-                        // o.User.Claims.Add(("UserId", id.ToString()));
+                        o.User.Claims.Add(("UserLogin", r.Login));
                         o.User["UserId"] = id.ToString();
                     }
                 );

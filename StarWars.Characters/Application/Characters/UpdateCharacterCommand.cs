@@ -13,6 +13,7 @@ using Result = OneOf<Character, UpdateCharacterErrors>;
 public record UpdateCharacterCommand(
     int               Id,
     string            Name,
+    string            OriginalName,
     CharacterBirthDay BirthDay,
     int               PlanetId, 
     CharacterGender   Gender, 
@@ -48,16 +49,17 @@ internal class UpdateCharacterCommandHandler(
 
         if (character.CreatedBy.Id != cmd.UserId) return UpdateCharacterErrors.OnlyAuthorCanUpdateCharacter;
 
-        character.Name        = cmd.Name;
-        character.BirthDay    = cmd.BirthDay;
-        character.HomeWorld   = planet;
-        character.Gender      = cmd.Gender;
-        character.Species     = species;
-        character.Height      = cmd.Height;
-        character.HairColor   = cmd.HairColor;
-        character.EyeColor    = cmd.EyeColor;
-        character.Description = cmd.Description;
-        character.Movies      = movies;
+        character.Name         = cmd.Name;
+        character.OriginalName = cmd.OriginalName;
+        character.BirthDay     = cmd.BirthDay;
+        character.HomeWorld    = planet;
+        character.Gender       = cmd.Gender;
+        character.Species      = species;
+        character.Height       = cmd.Height;
+        character.HairColor    = cmd.HairColor;
+        character.EyeColor     = cmd.EyeColor;
+        character.Description  = cmd.Description;
+        character.Movies       = movies;
         
         return characterRepository.Upsert(character);
     }

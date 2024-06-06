@@ -1,4 +1,5 @@
 ﻿using FastEndpoints;
+using FastEndpoints.Security;
 using FluentValidation;
 using MediatR;
 using StarWars.Characters.Application.Characters;
@@ -34,7 +35,10 @@ public class CharacterRemoveEndpoint(ISender sender): Endpoint<CharacterRemoveEn
     }
 
     public override Task HandleAsync(Request r, CancellationToken c) {
-        return sender.Send(new RemoveCharacterCommand(r.Id, 0), c).Result.Match(
+        var claimValue = HttpContext.User.ClaimValue("UserId");
+        Int32.TryParse(claimValue, out var userId);
+        
+        return sender.Send(new RemoveCharacterCommand(r.Id, userId), c).Result.Match(
             _ => SendOkAsync(c),
             e => {
                 AddError(e.ToString());
