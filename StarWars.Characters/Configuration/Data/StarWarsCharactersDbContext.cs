@@ -4,6 +4,7 @@ using StarWars.Characters.Models.Characters;
 using StarWars.Characters.Models.Movies;
 using StarWars.Characters.Models.Planets;
 using StarWars.Characters.Models.Species;
+using StarWars.Characters.Models.Users;
 
 namespace StarWars.Characters.Configuration.Data;
 
@@ -31,8 +32,12 @@ public class StarWarsCharactersDbContext : DbContext {
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Planet> Planets { get; set; }
     public DbSet<Species> Species { get; set; }
+    public DbSet<User> Users { get; set; }
 
     private static void SetupSeedDataWithBogus(ModelBuilder modelBuilder) {
+        var users = new List<User> { new() {Id = 1, Login = "admin", Password = "admin"} };
+        modelBuilder.Entity<User>().HasData(users);
+        
         // Генерация даты при помощи Bogus
         var databaseSeeder = new DatabaseSeeder();
 

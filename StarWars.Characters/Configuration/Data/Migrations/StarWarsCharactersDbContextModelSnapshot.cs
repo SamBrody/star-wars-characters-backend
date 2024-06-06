@@ -43,6 +43,10 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("created_by_id");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -99,6 +103,9 @@ namespace StarWars.Characters.Configuration.Data.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_characters");
+
+                    b.HasIndex("CreatedById")
+                        .HasDatabaseName("ix_characters_created_by_id");
 
                     b.HasIndex("HomeWorldId")
                         .HasDatabaseName("ix_characters_home_world_id");
@@ -319,6 +326,37 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("StarWars.Characters.Models.Users.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("login");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("password");
+
+                    b.HasKey("Id")
+                        .HasName("pk_users");
+
+                    b.ToTable("users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Login = "admin",
+                            Password = "admin"
+                        });
+                });
+
             modelBuilder.Entity("CharacterMovie", b =>
                 {
                     b.HasOne("StarWars.Characters.Models.Characters.Character", null)
@@ -338,6 +376,13 @@ namespace StarWars.Characters.Configuration.Data.Migrations
 
             modelBuilder.Entity("StarWars.Characters.Models.Characters.Character", b =>
                 {
+                    b.HasOne("StarWars.Characters.Models.Users.User", "CreatedBy")
+                        .WithMany("Characters")
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_characters_users_created_by_id");
+
                     b.HasOne("StarWars.Characters.Models.Planets.Planet", "HomeWorld")
                         .WithMany("Characters")
                         .HasForeignKey("HomeWorldId")
@@ -352,6 +397,8 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_characters_species_species_id");
 
+                    b.Navigation("CreatedBy");
+
                     b.Navigation("HomeWorld");
 
                     b.Navigation("Species");
@@ -363,6 +410,11 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                 });
 
             modelBuilder.Entity("StarWars.Characters.Models.Species.Species", b =>
+                {
+                    b.Navigation("Characters");
+                });
+
+            modelBuilder.Entity("StarWars.Characters.Models.Users.User", b =>
                 {
                     b.Navigation("Characters");
                 });

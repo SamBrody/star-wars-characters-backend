@@ -32,7 +32,10 @@ public class CharacterConfiguration : IEntityTypeConfiguration<Character> {
         
         b.HasOne(x => x.Species)
             .WithMany(y => y.Characters);
-        
+
+        b.HasOne(x => x.CreatedBy)
+            .WithMany(y => y.Characters);
+                    
         b.Property(x => x.Height)
             .IsRequired();
         

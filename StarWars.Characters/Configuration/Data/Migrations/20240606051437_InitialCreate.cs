@@ -52,6 +52,20 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "users",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    login = table.Column<string>(type: "TEXT", nullable: false),
+                    password = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_users", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "characters",
                 columns: table => new
                 {
@@ -62,6 +76,7 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                     home_world_id = table.Column<int>(type: "INTEGER", nullable: false),
                     gender = table.Column<int>(type: "INTEGER", nullable: false),
                     species_id = table.Column<int>(type: "INTEGER", nullable: false),
+                    created_by_id = table.Column<int>(type: "INTEGER", nullable: false),
                     height = table.Column<int>(type: "INTEGER", nullable: false),
                     hair_color = table.Column<string>(type: "TEXT", nullable: false),
                     eye_color = table.Column<string>(type: "TEXT", nullable: false),
@@ -82,6 +97,12 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                         name: "fk_characters_species_species_id",
                         column: x => x.species_id,
                         principalTable: "species",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_characters_users_created_by_id",
+                        column: x => x.created_by_id,
+                        principalTable: "users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -161,6 +182,16 @@ namespace StarWars.Characters.Configuration.Data.Migrations
                     { 10, "Куаррен" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "users",
+                columns: new[] { "id", "login", "password" },
+                values: new object[] { 1, "admin", "admin" });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_characters_created_by_id",
+                table: "characters",
+                column: "created_by_id");
+
             migrationBuilder.CreateIndex(
                 name: "ix_characters_home_world_id",
                 table: "characters",
@@ -194,6 +225,9 @@ namespace StarWars.Characters.Configuration.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "species");
+
+            migrationBuilder.DropTable(
+                name: "users");
         }
     }
 }

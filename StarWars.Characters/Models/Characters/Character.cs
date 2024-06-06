@@ -1,5 +1,6 @@
 ﻿using StarWars.Characters.Models.Movies;
 using StarWars.Characters.Models.Planets;
+using StarWars.Characters.Models.Users;
 
 namespace StarWars.Characters.Models.Characters;
 
@@ -36,6 +37,12 @@ public class Character: BaseModel {
     /// Раса персонажа
     /// </summary>
     public Species Species { get; set; }
+    
+        
+    /// <summary>
+    /// Пользователь, который создал персонажа
+    /// </summary>
+    public User CreatedBy { get; set; }
     
     /// <summary>
     /// Рост персонажа
