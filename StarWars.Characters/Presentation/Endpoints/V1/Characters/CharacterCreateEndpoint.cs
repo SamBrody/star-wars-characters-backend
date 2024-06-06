@@ -39,12 +39,16 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.OriginalName).NotEmpty();
             RuleFor(x => x.BirthDay).NotEmpty();
+            RuleFor(x => x.BirthDay.Year)
+                .GreaterThan(0)
+                .WithMessage("Год должен быть не отрицательным и больше 0")
+                .NotEmpty();
             RuleFor(x => x.PlanetId).NotEmpty();
             RuleFor(x => x.Gender).NotNull();
             RuleFor(x => x.SpeciesId).NotEmpty();
             RuleFor(x => x.Height)
                 .GreaterThan(0)
-                .WithMessage("Рост должен быть больше 0")
+                .WithMessage("Рост должен быть не отрицательным и больше 0")
                 .NotEmpty();
             RuleFor(x => x.HairColor).NotEmpty();
             RuleFor(x => x.EyeColor).NotEmpty();
