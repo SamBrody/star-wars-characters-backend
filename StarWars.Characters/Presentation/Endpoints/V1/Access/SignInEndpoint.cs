@@ -41,7 +41,7 @@ public class SignInEndpoint(IUserRepository userRepository)
     public override void Configure() {
         AllowAnonymous();
         
-        Post("/access/login");
+        Post("/access/signin");
         Version(1);
         Validator<ReqValidator>();
     }
