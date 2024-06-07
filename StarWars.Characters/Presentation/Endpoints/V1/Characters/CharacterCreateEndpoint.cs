@@ -1,4 +1,5 @@
 ﻿using FastEndpoints;
+using FastEndpoints.Security;
 using FluentValidation;
 using MediatR;
 using StarWars.Characters.Application.Characters;
@@ -22,8 +23,6 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
         public required CharacterGender Gender { get; init; }
     
         public required int SpeciesId { get; init; }
-        
-        public required int CreatedById { get; init; }
     
         public required int Height { get; init; }
     
@@ -48,7 +47,6 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
             RuleFor(x => x.PlanetId).NotEmpty();
             RuleFor(x => x.Gender).NotNull();
             RuleFor(x => x.SpeciesId).NotEmpty();
-            RuleFor(x => x.CreatedById).NotEmpty();
             RuleFor(x => x.Height)
                 .GreaterThan(0)
                 .WithMessage("Рост должен быть не отрицательным и больше 0")
@@ -73,7 +71,10 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
     }
     
     public override Task HandleAsync(CreateCharacterRequest r, CancellationToken c) {
-        var cmd = mapper.Map<RegisterCharacterCommand>(r);
+        var claimValue = HttpContext.User.ClaimValue("UserId");
+        Int32.TryParse(claimValue, out var userId);
+        
+        var cmd = MapToCommand(r, userId);
         
         return sender.Send(cmd, c).Result.Match(
             _ => SendOkAsync(c),
@@ -83,5 +84,24 @@ public class CharacterCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<
                 return SendErrorsAsync(cancellation: c);
             }
         );
+    }
+
+    private RegisterCharacterCommand MapToCommand(CreateCharacterRequest r, int userId) {
+        var cmd = new RegisterCharacterCommand(
+            Name:         r.Name,
+            OriginalName: r.OriginalName,
+            BirthDay:     r.BirthDay,
+            PlanetId:     r.PlanetId,
+            Gender:       r.Gender,
+            SpeciesId:    r.SpeciesId,
+            Height:       r.Height,
+            HairColor:    r.HairColor,
+            EyeColor:     r.EyeColor,
+            Description:  r.Description,
+            MovieIds:     r.MovieIds,
+            CreatedById:  userId
+        );
+
+        return cmd;
     }
 }
