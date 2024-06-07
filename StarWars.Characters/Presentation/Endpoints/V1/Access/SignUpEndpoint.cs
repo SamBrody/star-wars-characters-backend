@@ -42,7 +42,7 @@ public class SignUpEndpoint(ISender sender, IMapper mapper) : Endpoint<SignUpEnd
         return sender.Send(cmd, c).Result.Match(
             _ => SendOkAsync(c),
             e => {
-                AddError(e.ToString());
+                if (e == RegisterUserError.LoginIsAlreadyTaken) AddError(r => r.Login, "Логин уже занят! Введите другой");
 
                 return SendErrorsAsync(cancellation: c);
             }
