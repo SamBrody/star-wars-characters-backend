@@ -69,7 +69,7 @@ public class SignInEndpoint(IUserRepository userRepository)
             },
             e => {
                 if (e == SignInError.IncorrectLogin) AddError(r => r.Login, "Неверный логин");
-                if (e == SignInError.IncorrectPassword) AddError(r => r.Login, "Неверный пароль");
+                if (e == SignInError.IncorrectPassword) AddError(r => r.Password, "Неверный пароль");
 
                 return SendErrorsAsync(cancellation: c);
             }
