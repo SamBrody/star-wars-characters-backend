@@ -9,6 +9,6 @@ namespace StarWars.Characters.Configuration.MappingProfiles;
 public class UserMappingProfile : Profile {
     public UserMappingProfile() {
         CreateMap<User, UserDto>();
-        CreateMap<RegisterUserEndpoint.RegisterUserRequest, RegisterUserCommand>();
+        CreateMap<SignUpEndpoint.SignUpRequest, RegisterUserCommand>();
     }
 }

@@ -6,16 +6,16 @@ using IMapper = AutoMapper.IMapper;
 
 namespace StarWars.Characters.Presentation.Endpoints.V1.Access;
 
-public class RegisterUserEndpoint(ISender sender, IMapper mapper) : Endpoint<RegisterUserEndpoint.RegisterUserRequest> {
+public class SignUpEndpoint(ISender sender, IMapper mapper) : Endpoint<SignUpEndpoint.SignUpRequest> {
     #region Request
 
-    public class RegisterUserRequest {
+    public class SignUpRequest {
         public required string Login { get; init; }
         
         public required string Password { get; init; }
     }
 
-    private class ReqValidator : Validator<RegisterUserRequest> {
+    private class ReqValidator : Validator<SignUpRequest> {
         public ReqValidator() {
             RuleFor(x => x.Login).NotEmpty();
             RuleFor(x => x.Password).NotEmpty();
@@ -27,7 +27,7 @@ public class RegisterUserEndpoint(ISender sender, IMapper mapper) : Endpoint<Reg
     public override void Configure() {
         AllowAnonymous();
         
-        Post("/access/register");
+        Post("/access/sign-up");
         Version(1);
         Validator<ReqValidator>();
 
@@ -36,7 +36,7 @@ public class RegisterUserEndpoint(ISender sender, IMapper mapper) : Endpoint<Reg
         });
     }
 
-    public override Task HandleAsync(RegisterUserRequest r, CancellationToken c) {
+    public override Task HandleAsync(SignUpRequest r, CancellationToken c) {
         var cmd = mapper.Map<RegisterUserCommand>(r);
 
         return sender.Send(cmd, c).Result.Match(

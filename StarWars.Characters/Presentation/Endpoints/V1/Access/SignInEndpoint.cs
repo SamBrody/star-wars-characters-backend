@@ -41,9 +41,13 @@ public class SignInEndpoint(IUserRepository userRepository)
     public override void Configure() {
         AllowAnonymous();
         
-        Post("/access/signin");
+        Post("/access/sign-in");
         Version(1);
         Validator<ReqValidator>();
+        
+        Summary(x => {
+            x.Summary = "Аутентификация пользователя системы";
+        });
     }
 
     public override Task HandleAsync(SignInRequest r, CancellationToken c) {
