@@ -26,6 +26,8 @@ public class SignInEndpoint(IUserRepository userRepository)
     }
 
     public class SignInResposne {
+        public int UserId { get; init; }
+        
         public string Login { get; init; }
 
         public string Token { get; init; }
@@ -63,7 +65,7 @@ public class SignInEndpoint(IUserRepository userRepository)
                         o.User["UserId"] = id.ToString();
                     }
                 );
-                var response = new SignInResposne {Login = r.Login, Token = jwtToken};
+                var response = new SignInResposne {UserId = id, Login = r.Login, Token = jwtToken};
                 
                 return SendOkAsync(response, c);
             },
