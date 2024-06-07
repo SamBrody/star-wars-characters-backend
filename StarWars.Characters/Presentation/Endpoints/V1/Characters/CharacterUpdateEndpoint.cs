@@ -87,8 +87,12 @@ public class CharacterUpdateEndpoint(ISender sender, IMapper mapper) : Endpoint<
         return sender.Send(cmd, c).Result.Match(
             _ => SendOkAsync(c),
             e => {
-                AddError(e.ToString());
-
+                if (e == UpdateCharacterErrors.CharacterNotFound) AddError(r => r.SpeciesId, "Персонаж с таким идентификатором не найден");
+                if (e == UpdateCharacterErrors.OnlyAuthorCanUpdateCharacter) AddError("Изменить персонажа может тот, кто его добавил");
+                if (e == UpdateCharacterErrors.MoviesNotFound) AddError(r => r.MovieIds, "Фильм(ы) не найден(ы)");
+                if (e == UpdateCharacterErrors.HoweWorldNotFound) AddError(r => r.PlanetId, "Планета с таким идентификатором не найдена");
+                if (e == UpdateCharacterErrors.SpeciesIsNotFound) AddError(r => r.SpeciesId, "Раса с таким идентификатором не найдена");
+                
                 return SendErrorsAsync(cancellation: c);
             }
         );

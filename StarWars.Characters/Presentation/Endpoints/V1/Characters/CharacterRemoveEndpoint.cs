@@ -41,7 +41,8 @@ public class CharacterRemoveEndpoint(ISender sender): Endpoint<CharacterRemoveEn
         return sender.Send(new RemoveCharacterCommand(r.Id, userId), c).Result.Match(
             _ => SendOkAsync(c),
             e => {
-                AddError(e.ToString());
+                if (e == RemoveCharacterError.CharacterNotFound) AddError("Персонаж с таким индентификатором не найден");
+                if (e == RemoveCharacterError.OnlyAuthorCanRemoveCharacter) AddError("Удалить персонажа может тот, кто его добавил");
 
                 return SendErrorsAsync(cancellation: c);
             }
