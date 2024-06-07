@@ -17,7 +17,7 @@ public class CharacterDto {
     
     public SpeciesDto Species { get; init; }
     
-    public UserDto User { get; init; }
+    public UserDto CreatedBy { get; init; }
     
     public int Height { get; init; }
     
