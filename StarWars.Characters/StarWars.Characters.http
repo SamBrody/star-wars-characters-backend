@@ -1,6 +1,0 @@
-@StarWars.Characters.Runner_HostAddress = http://localhost:5023
-
-GET {{StarWars.Characters.Runner_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
