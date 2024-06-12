@@ -22,6 +22,7 @@ public class PlanetCreateEndpoint(ISender sender, IMapper mapper) : Endpoint<Pla
     public override void Configure() {
         Post("/planets");
         Version(1);
+        Validator<ReqValidator>();
 
         Summary(x => {
             x.Summary = "Регистрация новой планеты";
